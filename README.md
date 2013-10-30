@@ -1,4 +1,4 @@
 b3log-noty
 ==========
 
-A new Solo.
+A new solo, let's play!
