@@ -1,4 +1,12 @@
 b3log-noty
 ==========
 
-A new solo, let's play!
+A new [solo](https://github.com/b3log/b3log-solo), let's play!
+
+----
+
+平等，自由，奔放
+
+Equality, Freedom, Passion
+
+;-)
