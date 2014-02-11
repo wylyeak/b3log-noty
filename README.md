@@ -1,7 +1,7 @@
 b3log-noty
 ==========
 
-A new [solo](https://github.com/b3log/b3log-solo), let's play! :blush:
+A bran-new [solo](https://github.com/b3log/b3log-solo), let's play! :blush:
 
 ----
 
