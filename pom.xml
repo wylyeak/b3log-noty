@@ -26,7 +26,7 @@
 
     <!-- Properties -->
     <properties>
-        <org.b3log.latke.version>1.0.5</org.b3log.latke.version>
+        <org.b3log.latke.version>1.0.6</org.b3log.latke.version>
 
         <servlet.version>2.5</servlet.version>
         <slf4j.version>1.7.5</slf4j.version>
@@ -210,6 +210,7 @@
                         <include>**/src/*/webapp/js/*.js</include>
                         <include>**/src/*/webapp/skins/*/js/*.js</include>
                         <include>**/src/*/webapp/skins/*/css/*.css</include>
+                        <include>**/src/*/webapp/skins/*/skin.properties</include>
                         <include>**/src/*/webapp/js/admin/*.js</include>
                         <include>**/src/*/resources/*.properties</include>
                         <include>**/src/*/webapp/WEB-INF/*.xml</include>
@@ -226,7 +227,7 @@
                     </mapping>
                     <useDefaultMapping>true</useDefaultMapping>
                     <properties>
-                        <year>2014</year>
+                        <year>2013, 2014</year>
                         <devTeam>B3log Team</devTeam>
                     </properties>
                     <encoding>UTF-8</encoding>
