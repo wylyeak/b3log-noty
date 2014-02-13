@@ -1,6 +1,4 @@
-/*
- * GET users listing.
- */
+var db = require('../db/config').db;
 
 exports.list = function (req, res) {
     //res.send("respond with a resource");
@@ -11,3 +9,4 @@ exports.list = function (req, res) {
         last: 'http://api.example.com/users?page=5'
     });
 };
+

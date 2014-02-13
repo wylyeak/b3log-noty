@@ -5,6 +5,7 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var devDatabase = require('./routes/dev/database');
 var http = require('http');
 var path = require('path');
 
@@ -32,6 +33,9 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
+if ('development' == app.get('env')) {
+    app.get('/list/databases', devDatabase.listDatabases);
+}
 app.get('/user/:test?', function(req, res){
     console.log(req.route);
     console.log(req.param('test'));
