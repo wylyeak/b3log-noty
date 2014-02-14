@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
+/**
+ * @fileoverview 前台首页处理。
+ * @author Liang Ding <DL88250@gmail.com>
+ * @version 1.0.0.0, Feb 14, 2014
+ */
+
 exports.index = function (req, res) {
     res.render('index', { title: 'Noty' });
 };
+
+
 
 

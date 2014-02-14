@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+/**
+ * @fileoverview 用户管理。
+ * @author Liang Ding <DL88250@gmail.com>
+ * @version 1.0.0.0, Feb 14, 2014
+ */
+
 var db = require('../db/config').db;
 
 exports.list = function (req, res) {
@@ -25,6 +31,8 @@ exports.list = function (req, res) {
         last: 'http://api.example.com/users?page=5'
     });
 };
+
+
 
 
 

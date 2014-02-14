@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+/**
+ * @fileoverview Noty 主程序入口。
+ * @author Liang Ding <DL88250@gmail.com>
+ * @version 1.0.0.0, Feb 14, 2014
+ */
+
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -56,6 +62,8 @@ app.get('/user/:test?', function(req, res){
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
+
+
 
 
 

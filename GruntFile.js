@@ -28,6 +28,9 @@ module.exports = function (grunt) {
                     },
                     {
                         src: 'routes/**/*.js'
+                    },
+                    {
+                        src: 'db/**/*.js'
                     }
                 ]
             }
