@@ -8,9 +8,9 @@
         "url": "https://github.com/b3log/b3log-noty"
     },
     "bugs": "https://github.com/b3log/b3log-noty/issues",
-    "author":{
-        "name" : "B3log Team",
-        "url" : "http://b3log.org"
+    "author": {
+        "name": "B3log Team",
+        "url": "http://b3log.org"
     },
     "scripts": {
         "start": "node app.js"
@@ -19,5 +19,11 @@
         "express": "3.4.8",
         "jade": "1.1.5",
         "mongoskin": "0.6.1"
+    },
+    "devDependencies": {
+        "grunt": "0.4.2",
+        "grunt-contrib-jshint": "0.6.3",
+        "grunt-contrib-nodeunit": "0.2.0",
+        "grunt-contrib-uglify": "0.2.2"
     }
 }

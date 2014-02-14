@@ -15,4 +15,4 @@ exports.listDatabases = function (req, res) {
 
         res.send(result);
     });
-}
+};
