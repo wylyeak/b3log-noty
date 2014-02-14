@@ -32,13 +32,3 @@ exports.list = function (req, res) {
         last: 'http://api.example.com/users?page=5'
     });
 };
-
-
-
-
-
-
-
-
-
-

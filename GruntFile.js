@@ -66,7 +66,9 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-stamp');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
-    grunt.registerTask('default', ['stamp', 'uglify', 'jshint']);
+    grunt.loadTasks('tasks');
+
+    grunt.registerTask('default', ['stamp', 'jsdoc', 'uglify', 'jshint']);
 };
