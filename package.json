@@ -1,7 +1,22 @@
 {
-    "name": "application-name",
-    "version": "0.0.1",
-    "private": true,
+    "name": "B3log Noty",
+    "description": "A bran-new solo, let's play!",
+    "version": "1.0.0",
+    "licenses": [
+        {
+            "type": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/b3log/b3log-noty"
+    },
+    "bugs": "https://github.com/b3log/b3log-noty/issues",
+    "author":{
+        "name" : "B3log Team",
+        "url" : "http://b3log.org"
+    },
     "scripts": {
         "start": "node app.js"
     },
