@@ -20,6 +20,7 @@
  * @version 1.0.0.0, Feb 14, 2014
  */
 
+var path = require('path');
 var db = require('../db/config').db;
 
 exports.list = function (req, res) {
@@ -31,6 +32,10 @@ exports.list = function (req, res) {
         last: 'http://api.example.com/users?page=5'
     });
 };
+
+
+
+
 
 
 

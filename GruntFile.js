@@ -24,15 +24,17 @@ module.exports = function (grunt) {
             target: {
                 files: [
                     {
-                        src: 'app.js'
-                    },
-                    {
-                        src: 'routes/**/*.js'
-                    },
-                    {
-                        src: 'db/**/*.js'
+                        src: 'src/main/js/**/*.js'
                     }
                 ]
+            }
+        },
+        jsdoc : {
+            dist : {
+                src: ['src/main/js/**/*.js'],
+                options: {
+                    destination: 'doc'
+                }
             }
         },
         uglify: {
@@ -42,26 +44,16 @@ module.exports = function (grunt) {
             target: {
                 files: [
                     {
-                        src: 'app.js',
-                        dest: 'target/app.js'
-                    },
-                    {
                         expand: true,
-                        cwd: 'routes',
+                        cwd: 'src/main/js',
                         src: '**/*.js',
-                        dest: 'target/routes'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'db',
-                        src: '**/*.js',
-                        dest: 'target/db'
+                        dest: 'target/'
                     }
                 ]
             }
         },
         jshint: {
-            files: ['GruntFile.js', 'app.js', 'routes/**/*.js', 'db/**/*.js'],
+            files: ['GruntFile.js', 'src/main/js/**/*.js'],
             options: {
                 globals: {
                     jQuery: true,

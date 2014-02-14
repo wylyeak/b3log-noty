@@ -15,14 +15,14 @@
  */
 
 /**
- * @fileoverview 前台首页处理。
+ * @fileoverview 数据库连接。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 14, 2014
  */
 
-exports.index = function (req, res) {
-    res.render('index', { title: 'Noty' });
-};
+var mongoskin = require('mongoskin');
+
+exports.db = mongoskin.db('localhost/b3log-noty');
 
 
 
