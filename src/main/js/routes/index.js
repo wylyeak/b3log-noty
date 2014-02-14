@@ -20,6 +20,8 @@
  * @version 1.0.0.0, Feb 14, 2014
  */
 
+"use strict";
+
 exports.index = function (req, res) {
     res.render('index', { title: 'Noty' });
 };

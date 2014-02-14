@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-// TODO: grunt-stamp 问题确认与修复
+// TODO: grunt-stamp 问题确定与修复
 /**
  * @fileoverview 用于加文件头/尾的工具。由于<a href='https://github.com/brainkim/grunt-stamp'>原作</a>有问题，所以暂时
  * 在这里进行修复，等有时间再给原作者 Pull。
@@ -59,6 +59,7 @@ module.exports = function (grunt) {
                     } else { // 其他平台不确定，暂时保留
                         grunt.file.write(filepath, newFile + grunt.util.linefeed);
                     }
+
                     if (banner || footer) {
                         grunt.verbose.writeln(filepath + ' stamped!');
                     }

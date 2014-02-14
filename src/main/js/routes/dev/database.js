@@ -20,6 +20,8 @@
  * @version 1.0.0.0, Feb 14, 2014
  */
 
+"use strict";
+
 var db = require('../../db/config').db;
 
 exports.listDatabases = function (req, res) {

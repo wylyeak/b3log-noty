@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
+"use strict";
+
 /**
- * @fileoverview 数据库连接。
+ * @fileoverview Noty 相关配置。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 14, 2014
  */
 
-"use strict";
-
-var noty = require('../noty');
-var mongoskin = require('mongoskin');
-
-var mongo = noty.conf.mongo;
-
-/**
- * 数据库连接。
- *
- * @param {SkinDb} 数据库连接
- */
-exports.db = mongoskin.db(mongo.hostname + '/' + mongo.database);
+// TODO: 初始化向导生成
+exports.conf = {
+    version: '1.0.0',
+    notyTitle: 'B3log Noty',
+    notySubTitle: '专注于知识整理与分享',
+    mongo : {
+        hostname: 'localhost',
+        port: '27017',
+        username: '',
+        password: '',
+        database: 'b3log-noty'
+    }
+};
