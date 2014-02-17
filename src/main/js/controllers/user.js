@@ -15,18 +15,21 @@
  */
 
 /**
- * @file 用户模型。
+ * @file 用户相关处理处理。
+ *
+ * <ul>
+ *     <li>展现用户列表：/users, GET</li>
+ * </ul>
+ *
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 17, 2014
+ * @version 1.0.0.0, Feb 14, 2014
  */
 
 "use strict";
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt');
+module.exports.controller = function (app) {
 
-var userSchema = new Schema({
-    username: {type: String, required: [true, '请输入您的姓名']},
-    salt: String
-});
+    app.get('/users', function(req, res) {
+        res.send('test');
+    });
+};

@@ -17,7 +17,7 @@
 "use strict";
 
 /**
- * @fileoverview Noty 相关配置。
+ * @file Noty 相关配置。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 14, 2014
  */
