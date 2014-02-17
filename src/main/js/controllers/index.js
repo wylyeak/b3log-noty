@@ -22,6 +22,7 @@
  *
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 14, 2014
+ * @since 1.0.0
  */
 
 "use strict";

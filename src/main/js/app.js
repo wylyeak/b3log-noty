@@ -18,6 +18,7 @@
  * @file Noty 主程序入口。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 14, 2014
+ * @since 1.0.0
  */
 
 "use strict";
@@ -27,14 +28,11 @@ var http = require('http');
 var path = require('path');
 var express = require('express');
 var i18n = require('i18n-2');
+var noty = require('./noty');
 var app = express();
 
 // 环境准备
-i18n.expressBind(app, {
-    directory: path.join(__dirname, '../resources/locales'),
-    extension: '.json',
-    locales: ['zh_CN']
-});
+i18n.expressBind(app, noty.conf.i18n);
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');

@@ -18,6 +18,7 @@
  * @file 用户模型。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 17, 2014
+ * @since 1.0.0
  */
 
 "use strict";
@@ -25,8 +26,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
+var noty = require('../noty');
 
 var userSchema = new Schema({
-    username: {type: String, required: [true, '请输入您的姓名']},
-    salt: String
+    username: {type: String, required: [true, noty.i18n.__('invalidUserName')]}
 });
+
+var User = mongoose.model('User', userSchema);
+module.exports = User;

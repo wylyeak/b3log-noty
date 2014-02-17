@@ -1,3 +1,4 @@
 {
-    "Hello": "你好"
+	"invalidUserName": "invalidUserName",
+	"hello": "你好"
 }
