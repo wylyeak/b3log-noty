@@ -22,17 +22,14 @@
 
 "use strict";
 
+var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var express = require('express');
 
-var routes = require('./routes');
-var user = require('./routes/user');
-var devDatabase = require('./routes/dev/database');
-
 var app = express();
 
-// all environments
+// 环境准备
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');
@@ -46,20 +43,17 @@ app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, '../public')));
 
-// development only
+// 开发时
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-
-if ('development' == app.get('env')) {
-    app.get('/list/databases', devDatabase.listDatabases);
-}
-app.get('/user/:test?', function(req, res){
-    console.log(req.route);
-    console.log(req.param('test'));
+// 动态添加路由
+fs.readdirSync(path.join(__dirname, './controllers')).forEach(function (file) {
+    if ('.js' === file.substr(-3)) {
+        var route = require('./controllers/' + file);
+        route.controller(app);
+    }
 });
 
 http.createServer(app).listen(app.get('port'), function () {

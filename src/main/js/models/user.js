@@ -15,21 +15,9 @@
  */
 
 /**
- * @fileoverview 数据库连接。
+ * @fileoverview 用户模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 14, 2014
+ * @version 1.0.0.0, Feb 17, 2014
  */
 
 "use strict";
-
-var noty = require('../noty');
-var mongoskin = require('mongoskin');
-
-var mongo = noty.conf.mongo;
-
-/**
- * 数据库连接。
- *
- * @param {SkinDb} 数据库连接
- */
-exports.db = mongoskin.db(mongo.hostname + '/' + mongo.database);
