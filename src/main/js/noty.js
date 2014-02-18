@@ -17,7 +17,7 @@
 "use strict";
 
 /**
- * @file Noty 相关配置。
+ * @file Noty 相关配置与工具。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 14, 2014
  * @since 1.0.0
@@ -26,6 +26,31 @@
 var path = require('path');
 var I18n = require('i18n-2');
 var mongoose = require('mongoose');
+var winston = require('winston');
+var moment = require('moment');
+
+// 导出日志工具
+exports.logger = new (winston.Logger)({
+    transports: [
+        new (winston.transports.Console)({
+            'level': 'debug',
+            'timestamp': function() {
+                return moment().format('YYYY-MM-DD hh:mm:ss');
+            },
+            'colorize': true
+        })
+    ]
+});
+
+// 国际化配置
+var i18nConf = {
+    directory: path.join(__dirname, '../resources/locales'),
+    extension: '.json',
+    locales: ['zh_CN']
+}
+
+// 导出国际化工具
+exports.i18n = new I18n(i18nConf);
 
 // TODO: 初始化向导生成
 exports.conf = {
@@ -39,15 +64,10 @@ exports.conf = {
         password: '',
         database: 'b3log-noty'
     },
-    i18n: {
-        directory: path.join(__dirname, '../resources/locales'),
-        extension: '.json',
-        locales: ['zh_CN']
-    }
+    i18n: i18nConf
 };
 
 var mongoURL = 'mongodb://' + this.conf.mongo.hostname + '/' + this.conf.mongo.database;
 mongoose.connect(mongoURL);
-console.log('Connected MongoDB [' + mongoURL + ']');
 
-exports.i18n = new I18n(this.conf.i18n);
+this.logger.log('debug', 'Connected database [%s]', mongoURL);
