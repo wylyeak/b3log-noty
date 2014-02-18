@@ -51,6 +51,8 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
+
+
 // 动态添加路由
 fs.readdirSync(path.join(__dirname, './controllers')).forEach(function (file) {
     if ('.js' === file.substr(-3)) {

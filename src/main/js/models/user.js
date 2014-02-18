@@ -29,7 +29,7 @@ var bcrypt = require('bcrypt');
 var noty = require('../noty');
 
 var userSchema = new Schema({
-    username: {type: String, required: [true, noty.i18n.__('invalidUserName')]}
+    username: {type: String, required: [true, noty.i18n.__('invalidFormat')]}
 });
 
 var User = mongoose.model('User', userSchema);
