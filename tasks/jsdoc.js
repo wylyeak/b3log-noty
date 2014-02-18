@@ -1,5 +1,5 @@
 /**
- * @fileoverview 由于 grunt-jsdoc 有些 bugs，所以这里直接调用 jsdoc 进行文档生成。
+ * @file 由于 grunt-jsdoc 有些 bugs，所以这里直接调用 jsdoc 进行文档生成。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 14, 2014
  */
@@ -9,7 +9,7 @@
 var process = require('child_process');
 
 module.exports = function (grunt) {
-    grunt.registerMultiTask('jsdoc', 'Generates javascript documentation',
+    grunt.registerMultiTask('jsdoc', 'Generates JavaScript documentation',
 
         function () {
             this.filesSrc.forEach(function (filepath) {

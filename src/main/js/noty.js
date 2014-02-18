@@ -29,31 +29,33 @@ var mongoose = require('mongoose');
 var winston = require('winston');
 var moment = require('moment');
 
-// 导出日志工具
-exports.logger = new (winston.Logger)({
+// 日志工具
+var logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
             'level': 'debug',
-            'timestamp': function() {
+            'timestamp': function () {
                 return moment().format('YYYY-MM-DD hh:mm:ss');
             },
             'colorize': true
         })
     ]
 });
+// 导出日志工具
+exports.logger = logger;
 
 // 国际化配置
 var i18nConf = {
     directory: path.join(__dirname, '../resources/locales'),
     extension: '.json',
     locales: ['zh_CN']
-}
-
+};
 // 导出国际化工具
 exports.i18n = new I18n(i18nConf);
 
 // TODO: 初始化向导生成
-exports.conf = {
+// Noty 配置
+var conf = {
     version: '1.0.0',
     notyTitle: 'B3log Noty',
     notySubTitle: '专注于知识整理与分享',
@@ -66,8 +68,11 @@ exports.conf = {
     },
     i18n: i18nConf
 };
+// 导出 Noty 配置
+exports.conf = conf;
 
-var mongoURL = 'mongodb://' + this.conf.mongo.hostname + '/' + this.conf.mongo.database;
+var mongoURL = 'mongodb://' + conf.mongo.hostname + '/' + conf.mongo.database;
+// 连接数据库
 mongoose.connect(mongoURL);
 
-this.logger.log('debug', 'Connected database [%s]', mongoURL);
+logger.log('debug', 'Connected database [%s]', mongoURL);

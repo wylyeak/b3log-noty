@@ -15,22 +15,23 @@
  */
 
 /**
- * @file 文章模型。
+ * @file 文章模型测试用例。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 17, 2014
+ * @version 1.0.0.0, Feb 18, 2014
  * @since 1.0.0
  */
 
 "use strict";
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var noty = require('../noty');
+var assert = require("assert");
 
-var postSchema = new Schema({
-    title: {type: String, required: [true, noty.i18n.__('invalidFormat')]}
-});
-
-var Post = mongoose.model('Post', postSchema);
-module.exports = Post;
-
+// mocha demo
+describe('Array', function () {
+    describe('#indexOf()', function () {
+        it('should return -1 when the value is not present', function () {
+            assert.equal(-1, [1, 2, 3].indexOf(5));
+            assert.equal(-1, [1, 2, 3].indexOf(0));
+            assert.notEqual(0, [-1].indexOf(0));
+        })
+    })
+})

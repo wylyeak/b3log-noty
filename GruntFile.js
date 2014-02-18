@@ -17,7 +17,7 @@
 /**
  * @fileoverview Grunt 构建配置。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 14, 2014
+ * @version 1.0.0.1, Feb 18, 2014
  */
 
 module.exports = function (grunt) {
@@ -49,9 +49,20 @@ module.exports = function (grunt) {
                         src: 'src/main/js/**/*.js'
                     },
                     {
+                        src: 'src/test/js/**/*.js'
+                    },
+                    {
                         src: 'GruntFile.js'
                     }
                 ]
+            }
+        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec'
+                },
+                src: ['src/test/js/**/*.js']
             }
         },
         jsdoc : {
@@ -97,8 +108,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.loadTasks('tasks');
 
-    grunt.registerTask('default', ['clean', 'stamp', 'jsdoc', 'uglify', 'jshint']);
+    grunt.registerTask('default', ['clean', 'stamp', 'mochaTest', 'jsdoc', 'uglify', 'jshint']);
 };
