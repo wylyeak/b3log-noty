@@ -44,8 +44,7 @@ app.use(express.urlencoded());
 // TODO: app.use(express.cookieParser('your secret here'));
 // TODO: app.use(express.session());
 app.use(function (req, res, next) {
-    noty.logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
-
+    noty('logger').log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
     next();
 });
 app.use(express.static(path.join(__dirname, '../public')));
