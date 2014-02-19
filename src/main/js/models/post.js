@@ -17,7 +17,7 @@
 /**
  * @file 文章模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 17, 2014
+ * @version 1.0.0.1, Feb 19, 2014
  * @since 1.0.0
  */
 
@@ -26,9 +26,54 @@
 var mongoose = require('mongoose');
 var noty = require('../noty');
 
-var postSchema = new mongoose.Schema({
-    title: {type: String, required: [true, noty('i18n').__('invalidFormat')]}
+var Schema = mongoose.Schema;
+
+/**
+ * 文章结构。
+  */
+var postSchema = new Schema({
+    /**
+     * 标题。
+     */
+    title: {type: String, required: [true, noty('i18n').__('invalidFormat')]},
+    /**
+     * 摘要。
+     */
+    abstract: {type: String},
+    /**
+     * 作者 Id。
+     */
+    authorId: {type: Schema.ObjectId, ref: 'User'},
+    /**
+     * 浏览计数。
+     */
+    viewCount: {type: Number},
+    /**
+     * 固定链接。
+     */
+    permalink: {type: String},
+    /**
+     * 是否置顶。
+     */
+    stickied: {type: Boolean},
+    /**
+     * 签名档 Id。
+     */
+    signId: {type: Schema.ObjectId, ref: "Sign"},
+    /**
+     * 是否可以评论。
+     */
+    commentable: {type: Boolean},
+    /**
+     * 创建时间。
+     */
+    created: {type: Date},
+    /**
+     * 更新时间。
+     */
+    updated: {type: Date}
 });
 
+// 导出文章模型
 var Post = mongoose.model('Post', postSchema);
 module.exports = Post;

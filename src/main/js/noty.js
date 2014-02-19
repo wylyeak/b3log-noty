@@ -31,10 +31,13 @@ var winston = require('winston');
 var moment = require('moment');
 
 /**
- * 包含的服务
- * logger： 使用 winston
- * i18n:    使用 i18n-2
- * _: 包含 underscore，同时集成 underscore.string，整个工具集
+ * 公共服务。
+ *
+ * <ul>
+ *     <li>logger</li>winston
+ *     <li>i18n</li>i18n-2
+ *     <li>_</li>underscore, underscore.string
+ * </ul>
  */
 var service = {};
 

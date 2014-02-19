@@ -17,7 +17,7 @@
 /**
  * @file 用户模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 17, 2014
+ * @version 1.0.0.1, Feb 19, 2014
  * @since 1.0.0
  */
 
@@ -27,9 +27,44 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var noty = require('../noty');
 
-var userSchema = new mongoose.Schema({
-    username: {type: String, required: [true, noty.i18n.__('invalidFormat')]}
+var Schema = mongoose.Schema;
+
+/**
+ * 用户结构。
+ *
+ * @type {Schema}
+ */
+var userSchema = new Schema({
+    /**
+     * 用户名。
+     */
+    name: {type: String, required: [true, noty.i18n.__('invalidFormat')]},
+    /**
+     * 邮件。
+     */
+    email: {type: String},
+    /**
+     * 网址。
+     */
+    url: {type: String},
+    /**
+     * 密码。
+     */
+    password: {type: String},
+    /**
+     * 角色。
+     */
+    role: {type: String},
+    /**
+     * 创建时间。
+     */
+    created: {type: Date},
+    /**
+     * 更新时间。
+     */
+    updated: {type: Date}
 });
 
+// 导出用户模型
 var User = mongoose.model('User', userSchema);
 module.exports = User;
