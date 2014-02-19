@@ -17,21 +17,73 @@
 /**
  * @file 文章模型测试用例。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 18, 2014
+ * @version 1.0.0.1, Feb 19, 2014
  * @since 1.0.0
  */
 
 "use strict";
 
-var assert = require("assert");
+var assert = require('assert');
+var Post = require('../../../main/js/models/post');
 
-// mocha demo
-describe('Array', function () {
-    describe('#indexOf()', function () {
-        it('should return -1 when the value is not present', function () {
-            assert.equal(-1, [1, 2, 3].indexOf(5));
-            assert.equal(-1, [1, 2, 3].indexOf(0));
-            assert.notEqual(0, [-1].indexOf(0));
+describe('Post', function () {
+        describe('#save', function () {
+            it('ok', function () {
+                var post = new Post({
+                    title: '测试文章标题'
+                });
+
+                post.save(function (err) {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
+            });
         })
-    })
-})
+
+        describe('#find', function () {
+            it('>= 0', function () {
+                Post.find().where('title').regex(/试文/i).exec(function (err, posts) {
+                    assert(0 < posts.length);
+                });
+            })
+        })
+
+        describe('#update', function () {
+            it('ok', function () {
+                Post.update({title: /.+/i}, {title: '测试更新'}, function (err, numberAffected, raw) {
+                    if (err) {
+                        console.error(err);
+                    }
+                })
+            })
+        })
+
+        describe('#find', function () {
+            it('find updated', function () {
+                Post.find().where('title').equals('测试更新').exec(function (err, posts) {
+                    assert(0 < posts.length);
+                });
+            })
+        })
+
+        describe('#remove', function () {
+            it('remove all', function () {
+                Post.remove(function (err) {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
+            })
+        })
+
+        describe('#find', function () {
+            it('should empty', function () {
+                Post.find().exec(function (err, posts) {
+                    assert(0 === posts.length);
+                })
+            })
+        })
+    }
+)
+
