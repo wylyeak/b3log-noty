@@ -66,5 +66,5 @@ fs.readdirSync(path.join(__dirname, './controllers')).forEach(function (file) {
 
 // 启动服务
 http.createServer(app).listen(app.get('port'), function () {
-    noty.logger.log('info', 'Noty lisstening on port [%s]', app.get('port'));
+    noty('logger').log('info', 'Noty lisstening on port [%s]', app.get('port'));
 });

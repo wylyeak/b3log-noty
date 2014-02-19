@@ -28,26 +28,24 @@ var path = require('path');
 var I18n = require('i18n-2');
 var mongoose = require('mongoose');
 var winston = require('winston');
-
 var moment = require('moment');
-
 
 /**
  * 包含的服务
  * logger： 使用 winston
- * i18n:    使用i18n-2
- * _: 包含underscore，同时集成underscore.string，整个工具集
- *
+ * i18n:    使用 i18n-2
+ * _: 包含 underscore，同时集成 underscore.string，整个工具集
  */
-var service = {}
+var service = {};
+
 module.exports = function (serviceName) {
     return service[serviceName];
-}
+};
 
 var configs = require('../resources/noty.json');
 
 // 日志工具
-var logConfig = configs.logger
+var logConfig = configs.logger;
 var logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
@@ -62,9 +60,8 @@ var logger = new (winston.Logger)({
 // 注册日志工具
 service.logger = logger;
 
-
 // 国际化配置
-var i18nConfig = configs.i18n
+var i18nConfig = configs.i18n;
 var i18nConf = {
     directory: path.join(__dirname, '../resources/locales'),
     extension: '.json',
@@ -73,17 +70,26 @@ var i18nConf = {
 // 注册国际化工具
 service.i18n = new I18n(i18nConf);
 
-//通用util集合
-//underscore 集成underscore.string
+// 通用 util 集合
+// underscore 集成 underscore.string
 var _ = require('underscore');
 _.str = require('underscore.string');
 _.mixin(_.str.exports());
 service._ = _;
 
-
 //数据库
 var mongoConfig = configs.mongo;
-var mongoURL = 'mongodb://' + mongoConfig.hostname + '/' + mongoConfig.database;
+var mongoURL = 'mongodb://' + mongoConfig.username + ':' + mongoConfig.password + '@' +
+    mongoConfig.hostname + ':' + mongoConfig.port + '/' + mongoConfig.database;
 // 连接数据库
+mongoose.connection.on('connected', function (ref) {
+    logger.log('debug', 'Connected to mongo server');
+});
+mongoose.connection.on('disconnected', function () {
+    logger.log('error', 'Disconnected from mongo server');
+});
+mongoose.connection.on('error', function (err) {
+    logger.log('error', 'Could not connect to mongo server [' + err + ']');
+});
 mongoose.connect(mongoURL);
-logger.log('debug', 'Connected database [%s]', mongoURL);
+
