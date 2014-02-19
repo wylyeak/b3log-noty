@@ -24,10 +24,9 @@
 "use strict";
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var noty = require('../noty');
 
-var postSchema = new Schema({
+var postSchema = new mongoose.Schema({
     title: {type: String, required: [true, noty('i18n').__('invalidFormat')]}
 });
 

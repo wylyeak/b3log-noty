@@ -24,11 +24,10 @@
 "use strict";
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 var noty = require('../noty');
 
-var userSchema = new Schema({
+var userSchema = new mongoose.Schema({
     username: {type: String, required: [true, noty.i18n.__('invalidFormat')]}
 });
 
