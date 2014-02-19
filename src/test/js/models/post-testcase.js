@@ -27,6 +27,7 @@ var assert = require('assert');
 var Post = require('../../../main/js/models/post');
 
 describe('Post', function () {
+
         describe('#save', function () {
             it('ok', function () {
                 var post = new Post({

@@ -1,4 +1,6 @@
 .DS_Store
+.idea/runConfigurations/
+
 node_modules/
 .idea/workspace.xml
 target/
