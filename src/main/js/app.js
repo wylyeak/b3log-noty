@@ -32,7 +32,7 @@ var noty = require('./noty');
 var app = express();
 
 // 环境准备
-i18n.expressBind(app, noty.conf.i18n);
+i18n.expressBind(app, noty('i18n'));
 app.set('port', 8080);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');

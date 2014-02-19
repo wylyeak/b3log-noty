@@ -28,7 +28,7 @@ var Schema = mongoose.Schema;
 var noty = require('../noty');
 
 var postSchema = new Schema({
-    title: {type: String, required: [true, noty.i18n.__('invalidFormat')]}
+    title: {type: String, required: [true, noty("i18n").__('invalidFormat')]}
 });
 
 var Post = mongoose.model('Post', postSchema);

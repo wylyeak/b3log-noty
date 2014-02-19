@@ -19,7 +19,8 @@
 /**
  * @file Noty 相关配置与工具。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 14, 2014
+ * @author Steven Yao <wmainlove@gmail.com>
+ * @version 1.0.0.0, Feb 19, 2014
  * @since 1.0.0
  */
 
@@ -27,13 +28,30 @@ var path = require('path');
 var I18n = require('i18n-2');
 var mongoose = require('mongoose');
 var winston = require('winston');
+
 var moment = require('moment');
 
+
+/**
+ * 包含的服务
+ * logger： 使用 winston
+ * i18n:    使用i18n-2
+ * _: 包含underscore，同时集成underscore.string，整个工具集
+ *
+ */
+var service = {}
+module.exports = function (serviceName) {
+    return service[serviceName];
+}
+
+var configs = require('../resources/noty.json');
+
 // 日志工具
+var logConfig = configs.logger
 var logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
-            'level': 'debug',
+            'level': logConfig.level,
             'timestamp': function () {
                 return moment().format('YYYY-MM-DD hh:mm:ss');
             },
@@ -41,38 +59,31 @@ var logger = new (winston.Logger)({
         })
     ]
 });
-// 导出日志工具
-exports.logger = logger;
+// 注册日志工具
+service.logger = logger;
+
 
 // 国际化配置
+var i18nConfig = configs.i18n
 var i18nConf = {
     directory: path.join(__dirname, '../resources/locales'),
     extension: '.json',
-    locales: ['zh_CN']
+    locales: i18nConfig.locales
 };
-// 导出国际化工具
-exports.i18n = new I18n(i18nConf);
+// 注册国际化工具
+service.i18n = new I18n(i18nConf);
 
-// TODO: 初始化向导生成
-// Noty 配置
-var conf = {
-    version: '1.0.0',
-    notyTitle: 'B3log Noty',
-    notySubTitle: '专注于知识整理与分享',
-    mongo: {
-        hostname: 'localhost',
-        port: '27017',
-        username: '',
-        password: '',
-        database: 'b3log-noty'
-    },
-    i18n: i18nConf
-};
-// 导出 Noty 配置
-exports.conf = conf;
+//通用util集合
+//underscore 集成underscore.string
+var _ = require('underscore');
+_.str = require('underscore.string');
+_.mixin(_.str.exports());
+service._ = _;
 
-var mongoURL = 'mongodb://' + conf.mongo.hostname + '/' + conf.mongo.database;
+
+//数据库
+var mongoConfig = configs.mongo;
+var mongoURL = 'mongodb://' + mongoConfig.hostname + '/' + mongoConfig.database;
 // 连接数据库
 mongoose.connect(mongoURL);
-
 logger.log('debug', 'Connected database [%s]', mongoURL);
