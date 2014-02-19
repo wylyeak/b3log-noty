@@ -30,7 +30,7 @@
 
 module.exports.controller = function (app) {
 
-    app.get('/users', function(req, res) {
+    app.get('/users', function (req, res) {
         res.send('test');
     });
 };
