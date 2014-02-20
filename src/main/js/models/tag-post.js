@@ -15,7 +15,7 @@
  */
 
 /**
- * @file 标签模型。
+ * @file 标签-文章关联模型。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.0, Feb 20, 2014
  * @since 1.0.0
@@ -29,19 +29,19 @@ var noty = require('../noty');
 var Schema = mongoose.Schema;
 
 /**
- * 标签结构。
+ * 标签-文章关联结构。
  */
-var tagSchema = new Schema({
+var tagPostSchema = new Schema({
     /**
-     * 标签名。
+     * 标签 Id。
      */
-    title: {type: String},
+    tagId: {type: Schema.ObjectId, ref: "Tag"},
     /**
-     * 创建时间。
+     * 文章 Id。
      */
-    created: {type: Date}
+    postId: {type: Schema.ObjectId, ref: "Post"}
 });
 
-// 导出标签模型
-var Tag = mongoose.model('Tag', tagSchema);
-module.exports = Tag;
+// 导出标签-文章关联模型
+var TagPost = mongoose.model('TagPost', tagPostSchema);
+module.exports = TagPost;
