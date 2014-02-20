@@ -49,6 +49,10 @@ var postSchema = new Schema({
      */
     viewCount: {type: Number},
     /**
+     * 内容。
+     */
+    content: {type: String},
+    /**
      * 固定链接。
      */
     permalink: {type: String},
