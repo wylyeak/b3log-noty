@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-
-
 /**
- * @file 用户编号设定。
- *
- * <ul>
- *     <li>发布：/post, POST</li>
- * </ul>
+ * @file 参数配置模型。
  *
  * @author Steven Yao<wmainlove@gmail.com>
  * @version 1.0.0.0, Feb 19, 2014
@@ -30,9 +24,11 @@
 
 "use strict";
 
-module.exports.controller = function (app) {
+var mongoose = require('mongoose');
+var noty = require('../noty');
 
-};
+var Schema = mongoose.Schema;
+
 
 
 

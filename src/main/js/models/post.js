@@ -59,7 +59,7 @@ var postSchema = new Schema({
     /**
      * 签名档 Id。
      */
-    signId: {type: Schema.ObjectId, ref: "Sign"},
+    signId: {type: Schema.ObjectId, ref: "Option"},
     /**
      * 是否可以评论。
      */
