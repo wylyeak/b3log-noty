@@ -95,4 +95,3 @@ mongoose.connection.on('error', function (err) {
     logger.log('error', 'Could not connect to mongo server [' + err + ']');
 });
 mongoose.connect(mongoURL);
-

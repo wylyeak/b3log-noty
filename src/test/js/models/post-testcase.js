@@ -25,66 +25,102 @@
 
 var assert = require('assert');
 var Post = require('../../../main/js/models/post');
+var Tag = require('../../../main/js/models/tag');
 
-describe('Post', function () {
+/**
+ * 基本的文章增删改查测试。
+ */
+describe('Post CRUD', function () {
+    describe('#save', function () {
+        it('ok', function () {
+            var post = new Post({
+                title: '测试文章标题',
+                content: '测试文章内容'
+            });
 
-        describe('#save', function () {
-            it('ok', function () {
-                var post = new Post({
-                    title: '测试文章标题'
-                });
+            post.save(function (err) {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        });
+    })
 
-                post.save(function (err) {
-                    if (err) {
-                        console.error(err);
-                    }
-                });
+    describe('#find', function () {
+        it('>= 0', function () {
+            Post.find().where('title').regex(/试文/i).exec(function (err, posts) {
+                assert(0 < posts.length);
             });
         })
+    })
 
-        describe('#find', function () {
-            it('>= 0', function () {
-                Post.find().where('title').regex(/试文/i).exec(function (err, posts) {
-                    assert(0 < posts.length);
-                });
+    describe('#update', function () {
+        it('ok', function () {
+            Post.update({title: /.+/i}, {title: '测试更新'}, function (err, numberAffected, raw) {
+                if (err) {
+                    console.error(err);
+                }
             })
         })
+    })
 
-        describe('#update', function () {
-            it('ok', function () {
-                Post.update({title: /.+/i}, {title: '测试更新'}, function (err, numberAffected, raw) {
-                    if (err) {
-                        console.error(err);
-                    }
-                })
+    describe('#find', function () {
+        it('find updated', function () {
+            Post.find().where('title').equals('测试更新').exec(function (err, posts) {
+                assert(0 < posts.length);
+            });
+        })
+    })
+
+    describe('#remove', function () {
+        it('remove all', function () {
+            Post.remove(function (err) {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        })
+    })
+
+    describe('#find', function () {
+        it('should empty', function () {
+            Post.find().exec(function (err, posts) {
+                assert(0 === posts.length);
             })
         })
+    })
+})
 
-        describe('#find', function () {
-            it('find updated', function () {
-                Post.find().where('title').equals('测试更新').exec(function (err, posts) {
-                    assert(0 < posts.length);
-                });
-            })
-        })
+/**
+ * 文章实体业务方法测试。
+ */
+describe('Post Entity Biz Operations', function () {
+    after(function () {
+        Post.remove(function (err) {
+            if (err) {
+                console.error(err);
+            }
+        });
 
-        describe('#remove', function () {
-            it('remove all', function () {
-                Post.remove(function (err) {
-                    if (err) {
-                        console.error(err);
-                    }
-                });
-            })
+        Tag.remove(function (err) {
+            if (err) {
+                console.error(err);
+            }
         })
+    })
 
-        describe('#find', function () {
-            it('should empty', function () {
-                Post.find().exec(function (err, posts) {
-                    assert(0 === posts.length);
-                })
-            })
-        })
-    }
-)
+    describe('#publish', function () {
+        it('ok', function () {
+            var post = new Post({
+                title: '标题',
+                abstract: '摘要',
+                authorId: null,
+                content: '内容',
+                tags: [new Tag({title: '标签1'}), new Tag({title: '标签2'})]
+            });
+
+            post.publish();
+        });
+    })
+})
 

@@ -43,7 +43,7 @@ var commentSchema = new Schema({
     /**
      * 评论人邮件。
      */
-    email: {type: String},
+    email: {type: String, set: toLower},
     /**
      * 评论文章 Id。
      */
@@ -55,8 +55,12 @@ var commentSchema = new Schema({
     /**
      * 创建时间。
      */
-    created: {type: Date}
+    created: {type: Date, default: Date.now}
 });
+
+function toLower (v) {
+    return v.toLowerCase();
+}
 
 // 导出评论模型
 var Comment = mongoose.model('Comment', commentSchema);

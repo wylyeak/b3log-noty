@@ -25,12 +25,13 @@
 
 var mongoose = require('mongoose');
 var noty = require('../noty');
-
+var logger = noty('logger');
 var Schema = mongoose.Schema;
+var Tag = require('./tag');
 
 /**
  * 文章结构。
-  */
+ */
 var postSchema = new Schema({
     /**
      * 标题。
@@ -41,25 +42,31 @@ var postSchema = new Schema({
      */
     abstract: {type: String},
     /**
+     * 标签 Ids。
+     */
+    tagIds: [
+        {type: Schema.ObjectId, ref: 'Tag'}
+    ],
+    /**
      * 作者 Id。
      */
     authorId: {type: Schema.ObjectId, ref: 'User'},
     /**
      * 浏览计数。
      */
-    viewCount: {type: Number},
+    viewCount: {type: Number, default: 0},
     /**
      * 内容。
      */
-    content: {type: String},
+    content: {type: String, required: true},
     /**
      * 固定链接。
      */
-    permalink: {type: String},
+    permalink: {type: String, default: Date.now, required: true},
     /**
      * 是否置顶。
      */
-    stickied: {type: Boolean},
+    stickied: {type: Boolean, default: false},
     /**
      * 签名档 Id。
      */
@@ -67,16 +74,61 @@ var postSchema = new Schema({
     /**
      * 是否可以评论。
      */
-    commentable: {type: Boolean},
+    commentable: {type: Boolean, default: true},
     /**
      * 创建时间。
      */
-    created: {type: Date},
+    created: {type: Date, default: Date.now},
     /**
      * 更新时间。
      */
-    updated: {type: Date}
+    updated: {type: Date, default: Date.now}
 });
+
+/**
+ * 设置虚拟属性 tags，方便
+ */
+postSchema.virtual('tags').set(function (tags) {
+    for (var key in tags) {
+        this.tagIds.push(tags[key]);
+    }
+
+    this.tagRefs = tags;
+});
+
+/**
+ * 发布文章。
+ */
+postSchema.methods.publish = function () {
+    logger.log('debug', 'Publishing post [title=%s, id=%s]', this.title, this.id);
+
+    // 生成文章固定链接
+    genPostPermalink(this);
+
+    var tagRefs = this.tagRefs;
+
+    this.save(function (err) {
+        if (err) {
+            throw err;
+        }
+
+        for (var key in tagRefs) {
+            var tag = tagRefs[key];
+
+            tag.save(); // 创建一个标签（在 Tag.pre() 中处理重复判断）
+        }
+    });
+
+    logger.log('debug', 'Published post [title=%s, id=%s]', this.title, this.id);
+};
+
+/**
+ * 生成文章固定链接。
+ */
+// TODO: 用户自定义生成规则
+function genPostPermalink(post) {
+    post.permalink = post.id;
+}
 
 // 导出文章模型
 var Post = mongoose.model('Post', postSchema);

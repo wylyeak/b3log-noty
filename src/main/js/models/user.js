@@ -42,7 +42,7 @@ var userSchema = new Schema({
     /**
      * 邮件。
      */
-    email: {type: String},
+    email: {type: String, set: toLower},
     /**
      * 网址。
      */
@@ -58,12 +58,16 @@ var userSchema = new Schema({
     /**
      * 创建时间。
      */
-    created: {type: Date},
+    created: {type: Date, default: Date.now},
     /**
      * 更新时间。
      */
-    updated: {type: Date}
+    updated: {type: Date, default: Date.now}
 });
+
+function toLower (v) {
+    return v.toLowerCase();
+}
 
 // 导出用户模型
 var User = mongoose.model('User', userSchema);

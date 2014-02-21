@@ -25,7 +25,7 @@
 
 var mongoose = require('mongoose');
 var noty = require('../noty');
-
+var logger = noty('logger');
 var Schema = mongoose.Schema;
 
 /**
@@ -39,9 +39,28 @@ var tagSchema = new Schema({
     /**
      * 创建时间。
      */
-    created: {type: Date}
+    created: {type: Date, default: Date.now}
+});
+
+var Tag = mongoose.model('Tag', tagSchema);
+
+/**
+ * 在保存前判断是否已经存在，如果已经存在则忽略保存。
+ */
+tagSchema.pre('save', function (next) {
+    Tag.find().where('title').equals(this.title).exec(function (err, tags) {
+        if (0 >= tags.length) {
+            next();
+        }
+    });
+});
+
+/**
+ * 保存后打日志。
+ */
+tagSchema.post('save', function (next) {
+    logger.log('debug', "Created a tag [title=%s]", this.title);
 });
 
 // 导出标签模型
-var Tag = mongoose.model('Tag', tagSchema);
 module.exports = Tag;
