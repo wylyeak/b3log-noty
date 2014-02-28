@@ -3,5 +3,7 @@
 
 node_modules/
 .idea/workspace.xml
+.idea/jsLibraryMappings.xml
 target/
 doc/
+npm-debug.log

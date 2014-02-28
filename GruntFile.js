@@ -81,11 +81,19 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'src/main/js',
+                        cwd: 'src/main/public/javascripts',
                         src: '**/*.js',
-                        dest: 'target/'
+                        dest: 'target/public/javascripts'
                     }
                 ]
+            }
+        },
+        cssmin: {
+            minify: {
+                expand: true,
+                cwd: 'src/main/public/stylesheets',
+                src: ['*.css', '!*.min.css'],
+                dest: 'target/public/stylesheets'
             }
         },
         jshint: {
@@ -106,11 +114,13 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-mocha-test');
 
-    grunt.loadTasks('tasks');
+    grunt.registerTask('dev', [ 'mochaTest', 'jshint']);
 
-    grunt.registerTask('default', ['clean', 'stamp', 'mochaTest', 'jsdoc', 'uglify', 'jshint']);
+    grunt.loadTasks('tasks');
+    grunt.registerTask('default', ['clean', 'stamp', 'mochaTest', 'jsdoc', 'uglify', 'jshint', 'cssmin']);
 };
