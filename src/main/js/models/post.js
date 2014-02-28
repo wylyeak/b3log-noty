@@ -17,7 +17,7 @@
 /**
  * @file 文章模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.1, Feb 19, 2014
+ * @version 1.0.0.2, Feb 28, 2014
  * @since 1.0.0
  */
 
@@ -86,7 +86,7 @@ var postSchema = new Schema({
 });
 
 /**
- * 设置虚拟属性 tags，方便
+ * 在赋值虚拟属性 tags 时关联 tagIds，
  */
 postSchema.virtual('tags').set(function (tags) {
     for (var key in tags) {

@@ -22,7 +22,7 @@
  * </ul>
  *
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 17, 2014
+ * @version 1.0.0.1, Feb 28, 2014
  * @since 1.0.0
  */
 
@@ -37,27 +37,7 @@ module.exports.controller = function (app) {
             title: ''
         });
 
-        post.save(function (err) {
-            if (err) {
-                console.error('保存失败 [' + err.errors.title.message + ']');
-            } else {
-                console.log('保存成功');
-            }
-        });
-
-        var post1 = new Post({
-            title: 'Test 标题'
-        });
-
-        post1.save(
-            function (err) {
-                if (err) {
-                    console.error(err.errors.title.message);
-                } else {
-                    console.log('保存成功');
-                }
-            }
-        );
+        post.publish();
 
         res.send('post');
     });
