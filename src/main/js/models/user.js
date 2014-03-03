@@ -24,7 +24,6 @@
 "use strict";
 
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
 var noty = require('../noty');
 
 var Schema = mongoose.Schema;
@@ -38,11 +37,11 @@ var userSchema = new Schema({
     /**
      * 用户名。
      */
-    name: {type: String, required: [true, noty.i18n.__('invalidFormat')]},
+    name: {type: String, required: [true, noty('i18n').__('invalidFormat')]},
     /**
      * 邮件。
      */
-    email: {type: String, set: toLower},
+    email: {type: String, set: toLowerCase},
     /**
      * 网址。
      */
@@ -65,7 +64,7 @@ var userSchema = new Schema({
     updated: {type: Date, default: Date.now}
 });
 
-function toLower (v) {
+function toLowerCase (v) {
     return v.toLowerCase();
 }
 

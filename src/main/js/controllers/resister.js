@@ -17,7 +17,7 @@
 /**
  * @file 注册页面
  * <ul>
- *     <li>注册页面：/register.html, GET</li>
+ *     <li>注册页面：/register, GET</li>
  * </ul>
  *
  * @author Liyuan Li <http://vanessa.b3log.org>
@@ -29,7 +29,7 @@
 
 module.exports.controller = function (app) {
 
-    app.get('/register.html', function (req, res) {
+    app.get('/register', function (req, res) {
         res.render('register', { title: 'Noty - register' });
     });
 };
