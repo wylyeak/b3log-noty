@@ -79,13 +79,13 @@ optionSchema.statics.initialize = function (args) {
 function init(arg) {
     logger.log('info', 'Initing options');
 
-    var userName = new Option({
+    var userNameOpt = new Option({
         category: 'prefs',
         key: 'userName',
         value: arg.userName
     });
 
-    userName.save();
+    userNameOpt.save();
 
     // 初始化管理员用户
     new User({

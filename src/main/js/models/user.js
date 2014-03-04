@@ -54,7 +54,7 @@ var userSchema = new Schema({
     /**
      * 盐，用于密码哈希。
      */
-    salt: {type: Number, default: genSalt},
+    salt: {type: String, default: genSalt},
     /**
      * 角色。
      */
@@ -69,8 +69,8 @@ var userSchema = new Schema({
     updated: {type: Date, default: Date.now}
 });
 
-function hash(user) {
-    user.password = bcrypt.hashSync(user.password, user.salt);
+function hash(password) {
+    return bcrypt.hashSync(password, this.salt);
 }
 
 function genSalt() {
