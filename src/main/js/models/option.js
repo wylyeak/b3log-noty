@@ -65,7 +65,7 @@ optionSchema.statics.initialize = function (args) {
         if (0 < options.length) {
             logger.log('info', 'Options has already initialized');
 
-            return; // 初始化过的话不再进行初始化
+            return; // 如果已经初始化过则不再初始化
         }
 
         // 进行初始化
@@ -76,20 +76,24 @@ optionSchema.statics.initialize = function (args) {
 /**
  * 初始化参数配置。
  */
-function init(args) {
+function init(arg) {
     logger.log('info', 'Initing options');
 
     var userName = new Option({
         category: 'prefs',
         key: 'userName',
-        value: args.userName
+        value: arg.userName
     });
 
     userName.save();
 
     // 初始化管理员用户
     new User({
-       name: args.userName
+        name: arg.userName,
+        email: arg.email,
+        url: arg.url,
+        password: arg.password,
+        role: arg.role
     }).save();
 
     //

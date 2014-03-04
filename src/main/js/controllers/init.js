@@ -38,11 +38,15 @@ module.exports.controller = function (app) {
     });
 
     app.get('/initOpt', function (req, res) {
-        var args = {
-            userName: 'test user'
+        var arg = {
+            userName: 'test user',
+            email: 'DL88250@gmail.com',
+            url: 'http://88250.b3log.org',
+            password: 'test password',
+            role: 'Admin'
         };
 
-        Option.initialize(args);
+        Option.initialize(arg);
 
         res.send('inited');
     });
