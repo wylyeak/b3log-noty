@@ -17,13 +17,16 @@
 /**
  * @file 初始化页面
  * <ul>
- *     <li>展现初始化页面：/init, GET</li>
- *     <li>初始化：/init, POST</li>
+ *     <li>展现初始化数据库页面：/init/mongo, GET</li>
+ *     <li>展现初始化应用页面：/init/noty, GET</li>
+ *     <li>初始化数据库：/init/mongo, POST</li>
+ *     <li>初始化应用：/init/noty, POST</li>
+ *     <li>恢复初始化状态：/init/ag, POST</li>
  * </ul>
  *
  * @author Liyuan Li <http://vanessa.b3log.org>
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.1, Mar 3, 2014
+ * @version 1.0.0.2, Mar 4, 2014
  * @since 1.0.0
  */
 
@@ -33,21 +36,41 @@ var Option = require('../models/option');
 
 module.exports.controller = function (app) {
 
-    app.get('/init', function (req, res) {
+    app.get('/init/mongo', function (req, res) {
         res.render('init', { title: 'Noty - register' });
     });
 
-    app.get('/initOpt', function (req, res) {
+    app.get('/init/noty', function (req, res) {
+        res.render('init', { title: 'Noty - register' });
+    });
+
+    app.post('/init/mongo', function (req, res) {
+        var arg = {
+            hostname: 'localhost',
+            port: '27017',
+            username: '',
+            password: '',
+            database: 'b3log-noty'
+        };
+
+        Option.initMongo(arg);
+
+        res.send('inited mongo');
+    });
+
+    app.post('/init/noty', function (req, res) {
         var arg = {
             userName: 'test user',
             email: 'DL88250@gmail.com',
-            url: 'http://88250.b3log.org',
-            password: 'test password',
-            role: 'Admin'
+            password: 'test password'
         };
 
-        Option.initialize(arg);
+        Option.initNoty(arg);
 
-        res.send('inited');
+        res.send('inited noty');
+    });
+
+    app.get('/init/ag', function (req, res) {
+       Option.initAg();
     });
 };

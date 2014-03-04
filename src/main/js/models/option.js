@@ -17,6 +17,16 @@
 /**
  * @file 参数配置模型。
  *
+ * <p>
+ *     Noty 的初始化也是在该模块中实现，初始化有两个步骤：
+ *     <ol>
+ *         <li>初始化数据库</li>
+ *         <li>初始化应用参数配置</li>
+ *     </ol>
+ *     第一个步骤执行成功的话将以 noty.json 为模版创建 noty-prod.json，第二个步骤会更新这个配置文件。
+ *     调用 initAg 时会删除这个配置文件，恢复初始化状态。
+ * </p>
+ *
  * @author Steven Yao<wmainlove@gmail.com>
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.1, Mar 3, 2014
@@ -25,12 +35,16 @@
 
 "use strict";
 
+var fs = require('fs');
+var path = require('path');
 var mongoose = require('mongoose');
 var noty = require('../noty');
 var User = require('./user');
 var logger = noty('logger');
-
+var conf = require('../../resources/noty.json');
 var Schema = mongoose.Schema;
+
+var confProdPath = path.join(__dirname, '../../resources/noty-prod.json');
 
 /**
  * 参数配置结构。
@@ -51,16 +65,17 @@ var optionSchema = new Schema({
 });
 
 /**
- * 初始化参数配置。
- *
- * @param args 指定的实参，例如：
- * <pre>
- * {
- *     userName: "88250"
- * }
- * </pre>
+ * 初始化应用参数配置。
  */
-optionSchema.statics.initialize = function (args) {
+optionSchema.statics.initNoty = function (args) {
+    var initedDB = fs.existsSync('../../resources/noty-prod.json');
+
+    if (!initedDB) {
+        logger.log('info', 'Database has not initialized yet');
+
+        return;
+    }
+
     Option.find(function (err, options) {
         if (0 < options.length) {
             logger.log('info', 'Options has already initialized');
@@ -68,37 +83,94 @@ optionSchema.statics.initialize = function (args) {
             return; // 如果已经初始化过则不再初始化
         }
 
-        // 进行初始化
-        init(args);
+        logger.log('info', 'Initializing options');
+
+        // 初始化参数配置
+        new Option({ // 标题
+            category: 'prefs',
+            key: 'title',
+            value: arg.title
+        }).save();
+
+        new Option({ // 子标题
+            category: 'prefs',
+            key: 'subTitle',
+            value: arg.subTitle
+        }).save();
+
+        // 初始化管理员用户
+        new User({
+            name: arg.userName,
+            email: arg.email,
+            password: arg.password,
+            role: 'Admin'
+        }).save();
+
+        // 保存配置
+        var confProd = require(confProdPath);
+        confProd.base.title = arg.title;
+        confProd.base.subTitle = arg.subTitle;
+
+        fs.writeFile(confProdPath, confProd);
+
+        // 发布 "Hello World!" 文章
+
+
+        logger.log('info', 'Initialized options');
     });
 };
 
 /**
- * 初始化参数配置。
+ * 初始化数据库。
  */
-function init(arg) {
-    logger.log('info', 'Initing options');
+optionSchema.statics.initMongo = function (arg) {
+    var inited = fs.existsSync(confProdPath);
 
-    var userNameOpt = new Option({
-        category: 'prefs',
-        key: 'userName',
-        value: arg.userName
-    });
+    if (inited) {
+        logger.log('info', 'Database has already initialized');
 
-    userNameOpt.save();
+        return;
+    }
 
-    // 初始化管理员用户
-    new User({
-        name: arg.userName,
-        email: arg.email,
-        url: arg.url,
-        password: arg.password,
-        role: arg.role
-    }).save();
+    logger.log('info', 'Initializing database');
 
-    //
+    var mongoURL = 'mongodb://' + arg.username + ':' + arg.password + '@' +
+        arg.hostname + ':' + arg.port + '/' + arg.database;
 
-    logger.log('info', 'Inited options');
+    mongoose.connect(mongoURL);
+
+    // 保存配置
+    conf.mongo.hostname = arg.hostname;
+    conf.mongo.port = arg.port;
+    conf.mongo.username = arg.username;
+    conf.mongo.password = arg.password;
+    conf.mongo.database = arg.database;
+
+    fs.writeFile(confProdPath, conf);
+
+    logger.log('info', 'Initialized options');
+}
+
+/**
+ * 恢复初始化状态。
+ *
+ * <ol>
+ *     <li>删除 resources/noty-prod.json 文件</li>
+ * </ol>
+ */
+optionSchema.statics.initAg = function () {
+    if (fs.existsSync(confProdPath)) {
+        fs.unlinkSync(confProdPath);
+    }
+
+    logger.log('info', 'Noty has been reset, please initialize it again');
+}
+
+/**
+ * 判断 Noty 是否已经初始化完毕。
+ */
+optionSchema.statics.isInited = function () {
+   return fs.existsSync(confProdPath);
 }
 
 // 导出文章模型

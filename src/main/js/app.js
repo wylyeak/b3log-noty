@@ -29,6 +29,8 @@ var path = require('path');
 var express = require('express');
 var i18n = require('i18n-2');
 var noty = require('./noty');
+var logger = noty('logger');
+var Option = require('./models/option');
 var app = express();
 
 // 环境准备
@@ -44,7 +46,19 @@ app.use(express.urlencoded());
 // TODO: app.use(express.cookieParser('your secret here'));
 // TODO: app.use(express.session());
 app.use(function (req, res, next) {
-    noty('logger').log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
+    logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
+
+    console.log(req.path);
+    console.log('::' + "/init/mongo" !== req.path);
+    // 如果 Noty 没有进行过初始化，则重定向到初始化向导页面
+    if (!Option.isInited() && ('/init/mongo' !== req.path || '/init/noty' !== req.path)) {
+        logger.log('info', 'B3log Noty has not been initialized yet, redirect requests to Init Wizard');
+
+        res.redirect('/init/mongo');
+
+        return;
+    }
+
     next();
 });
 app.use(express.static(path.join(__dirname, '../public')));
@@ -65,5 +79,5 @@ fs.readdirSync(path.join(__dirname, './controllers')).forEach(function (file) {
 
 // 启动服务
 http.createServer(app).listen(app.get('port'), function () {
-    noty('logger').log('info', 'Noty lisstening on port [%s]', app.get('port'));
+    logger.log('info', 'Noty lisstening on port [%s]', app.get('port'));
 });

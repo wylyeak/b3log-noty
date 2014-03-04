@@ -86,12 +86,13 @@ var mongoURL = 'mongodb://' + mongoConfig.username + ':' + mongoConfig.password 
     mongoConfig.hostname + ':' + mongoConfig.port + '/' + mongoConfig.database;
 // 连接数据库
 mongoose.connection.on('connected', function (ref) {
-    logger.log('debug', 'Connected to mongo server');
+    logger.log('info', 'Connected to mongo server');
 });
 mongoose.connection.on('disconnected', function () {
-    logger.log('error', 'Disconnected from mongo server');
+    logger.log('info', 'Disconnected from mongo server');
 });
 mongoose.connection.on('error', function (err) {
     logger.log('error', 'Could not connect to mongo server [' + err + ']');
 });
-mongoose.connect(mongoURL);
+// 如果用户已经初始化过 noty 了，则在此时连接 mongo，否则会在初始化过程中连接（option#initMongo）
+// TODO: mongoose.connect(mongoURL);
