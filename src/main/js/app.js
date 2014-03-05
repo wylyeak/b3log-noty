@@ -48,10 +48,8 @@ app.use(express.urlencoded());
 app.use(function (req, res, next) {
     logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
 
-    console.log(req.path);
-    console.log('::' + "/init/mongo" !== req.path);
     // 如果 Noty 没有进行过初始化，则重定向到初始化向导页面
-    if (!Option.isInited() && ('/init/mongo' !== req.path || '/init/noty' !== req.path)) {
+    if (!Option.isInited() && '/init/mongo' !== req.path && '/init/noty' !== req.path) {
         logger.log('info', 'B3log Noty has not been initialized yet, redirect requests to Init Wizard');
 
         res.redirect('/init/mongo');

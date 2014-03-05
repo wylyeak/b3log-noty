@@ -67,7 +67,7 @@ var optionSchema = new Schema({
 /**
  * 初始化应用参数配置。
  */
-optionSchema.statics.initNoty = function (args) {
+optionSchema.statics.initNoty = function (arg) {
     var initedDB = fs.existsSync('../../resources/noty-prod.json');
 
     if (!initedDB) {
@@ -149,7 +149,7 @@ optionSchema.statics.initMongo = function (arg) {
     fs.writeFile(confProdPath, conf);
 
     logger.log('info', 'Initialized options');
-}
+};
 
 /**
  * 恢复初始化状态。
@@ -164,14 +164,14 @@ optionSchema.statics.initAg = function () {
     }
 
     logger.log('info', 'Noty has been reset, please initialize it again');
-}
+};
 
 /**
  * 判断 Noty 是否已经初始化完毕。
  */
 optionSchema.statics.isInited = function () {
    return fs.existsSync(confProdPath);
-}
+};
 
 // 导出文章模型
 var Option = mongoose.model('option', optionSchema);

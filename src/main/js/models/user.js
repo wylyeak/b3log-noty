@@ -25,7 +25,7 @@
 
 var mongoose = require('mongoose');
 var noty = require('../noty');
-var bcrypt = require('bcrypt');
+var crypto = require('crypto');
 
 var Schema = mongoose.Schema;
 
@@ -52,10 +52,6 @@ var userSchema = new Schema({
      */
     password: {type: String, set: hash},
     /**
-     * 盐，用于密码哈希。
-     */
-    salt: {type: String, default: genSalt},
-    /**
      * 角色。
      */
     role: {type: String, enum: 'Admin Default'.split(' ')},
@@ -70,13 +66,7 @@ var userSchema = new Schema({
 });
 
 function hash(password) {
-    return bcrypt.hashSync(password, this.salt);
-}
-
-function genSalt() {
-    var rand = Math.floor(Math.random() * 24 + 1); // [1, 25]
-
-    return bcrypt.genSaltSync(rand);
+    return crypto.createHash('md5').update(password);
 }
 
 function toLowerCase(v) {
