@@ -17,7 +17,7 @@
 /**
  * @fileoverview Grunt 构建配置。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.1, Feb 18, 2014
+ * @version 1.0.0.2, Mar 5, 2014
  */
 
 module.exports = function (grunt) {
@@ -70,8 +70,8 @@ module.exports = function (grunt) {
                 src: ['src/test/js/**/*.js']
             }
         },
-        jsdoc : {
-            dist : {
+        jsdoc: {
+            dist: {
                 src: ['src/main/js'],
                 options: {
                     destination: 'doc'
@@ -89,6 +89,12 @@ module.exports = function (grunt) {
                         cwd: 'src/main/public/javascripts',
                         src: '**/*.js',
                         dest: 'target/public/javascripts'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'src/main/js',
+                        src: '**/*.js',
+                        dest: 'target/js'
                     }
                 ]
             }
@@ -115,17 +121,43 @@ module.exports = function (grunt) {
                 }
             }
         },
-        clean: ["target/**", "doc/**"]
+        clean: ["target/**", "doc/**"],
+        copy: {
+            main: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/main/public/images',
+                        src: ['**'],
+                        dest: 'target/public/images'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'src/main/resources',
+                        src: ['**'],
+                        dest: 'target/resources'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'src/main/views',
+                        src: ['**'],
+                        dest: 'target/views'
+                    }
+                ]
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-mocha-test');
 
     grunt.registerTask('dev', [ 'mochaTest', 'jshint']);
 
     grunt.loadTasks('tasks');
-    grunt.registerTask('default', ['clean', 'stamp', 'mochaTest', 'jsdoc', 'uglify', 'jshint', 'cssmin']);
+    grunt.registerTask('default', ['clean', 'stamp', 'mochaTest', 'jsdoc', 'uglify', 'jshint', 'cssmin',
+        'copy']);
 };
