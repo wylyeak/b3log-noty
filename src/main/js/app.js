@@ -34,7 +34,7 @@ var Option = require('./models/option');
 var app = express();
 
 // 环境准备
-i18n.expressBind(app, noty('i18n'));
+i18n.expressBind(app, noty('i18n')); // 国际化工具绑定请求
 app.set('port', 8080);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');

@@ -39,7 +39,10 @@ var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose');
 var noty = require('../noty');
+var i18n = noty('i18n');
 var User = require('./user');
+var Post = require('./post');
+var Tag = require('./tag');
 var logger = noty('logger');
 var conf = require('../../resources/noty.json');
 var Schema = mongoose.Schema;
@@ -66,9 +69,20 @@ var optionSchema = new Schema({
 
 /**
  * 初始化应用参数配置。
+ *
+ * arg 初始化实参，例如
+ * <pre>
+ * {
+ *     title: "",
+ *     subTitle: "",
+ *     userName: "",
+ *     email: "",
+ *     password: ""
+ * }
+ * </pre>
  */
 optionSchema.statics.initNoty = function (arg) {
-    var initedDB = fs.existsSync('../../resources/noty-prod.json');
+    var initedDB = fs.existsSync(confProdPath);
 
     if (!initedDB) {
         logger.log('info', 'Database has not initialized yet');
@@ -99,22 +113,33 @@ optionSchema.statics.initNoty = function (arg) {
         }).save();
 
         // 初始化管理员用户
-        new User({
+        var admin = new User({
             name: arg.userName,
             email: arg.email,
             password: arg.password,
             role: 'Admin'
-        }).save();
+        });
+
+        admin.save();
 
         // 保存配置
         var confProd = require(confProdPath);
+
         confProd.base.title = arg.title;
         confProd.base.subTitle = arg.subTitle;
 
-        fs.writeFile(confProdPath, confProd);
+        fs.writeFile(confProdPath, JSON.stringify(confProd, null, 4));
 
         // 发布 "Hello World!" 文章
+        var post = new Post({
+            title: i18n.__('helloWorldTitle'),
+            abstract: i18n.__('helloWorldContent'),
+            authorId: admin.id,
+            content: i18n.__('helloWorldContent'),
+            tags: [new Tag({title: 'B3log Noty'})]
+        });
 
+        post.publish();
 
         logger.log('info', 'Initialized options');
     });
@@ -124,9 +149,9 @@ optionSchema.statics.initNoty = function (arg) {
  * 初始化数据库。
  */
 optionSchema.statics.initMongo = function (arg) {
-    var inited = fs.existsSync(confProdPath);
+    var initedDB = fs.existsSync(confProdPath);
 
-    if (inited) {
+    if (initedDB) {
         logger.log('info', 'Database has already initialized');
 
         return;
@@ -146,7 +171,7 @@ optionSchema.statics.initMongo = function (arg) {
     conf.mongo.password = arg.password;
     conf.mongo.database = arg.database;
 
-    fs.writeFile(confProdPath, conf);
+    fs.writeFileSync(confProdPath, JSON.stringify(conf, null, 4));
 
     logger.log('info', 'Initialized options');
 };

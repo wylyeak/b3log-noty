@@ -66,7 +66,7 @@ var userSchema = new Schema({
 });
 
 function hash(password) {
-    return crypto.createHash('md5').update(password);
+    return crypto.createHash('md5').update(password).digest('hex');
 }
 
 function toLowerCase(v) {
