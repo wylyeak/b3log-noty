@@ -56,7 +56,7 @@ app.use(function (req, res, next) {
     logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
 
     // 如果 Noty 没有进行过初始化，则重定向到初始化向导页面
-    if (!Option.isInited() && '/init/mongo' !== req.path && '/init/noty' !== req.path) {
+    if (!Option.isInited() && '/init/mongo' !== req.path) {
         logger.log('info', 'B3log Noty has not been initialized yet, redirect requests to Init Wizard');
 
         res.redirect('/init/mongo');
@@ -72,6 +72,12 @@ app.use(app.router);
 // 开发时
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
+
+    app.get('/dev/reset', function () {
+        var Option = require('./models/option');
+
+        Option.initAg();
+    });
 }
 
 // 动态添加路由

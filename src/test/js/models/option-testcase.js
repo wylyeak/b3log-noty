@@ -35,30 +35,6 @@ var conf = require('../../resources/noty.json');
  */
 describe('Option Model Static Operations', function () {
     after(function () {
-        Post.remove(function (err) {
-            if (err) {
-                console.error(err);
-            }
-        });
-
-        Tag.remove(function (err) {
-            if (err) {
-                console.error(err);
-            }
-        });
-
-        Option.remove(function(err){
-            if (err) {
-                console.error(err);
-            }
-        });
-
-        User.remove(function(err){
-            if (err) {
-                console.error(err);
-            }
-        });
-
         Option.initAg();
     })
 

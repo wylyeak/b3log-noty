@@ -60,9 +60,11 @@ module.exports.controller = function (app) {
 
     app.post('/init/noty', function (req, res) {
         var arg = {
-            userName: 'test user',
-            email: 'DL88250@gmail.com',
-            password: 'test password'
+            userName: req.param('userName'),
+            email: req.param('email'),
+            password: req.param('password'),
+            title: req.param('title'),
+            subTitle: req.param('subTitle')
         };
 
         Option.initNoty(arg);

@@ -164,14 +164,20 @@ optionSchema.statics.initMongo = function (arg) {
 
     mongoose.connect(mongoURL);
 
-    // 保存配置
-    conf.mongo.hostname = arg.hostname;
-    conf.mongo.port = arg.port;
-    conf.mongo.username = arg.username;
-    conf.mongo.password = arg.password;
-    conf.mongo.database = arg.database;
+    mongoose.connection.on('connected', function (ref) {
+        if (!initedDB) {
+            // 保存配置
+            conf.mongo.hostname = arg.hostname;
+            conf.mongo.port = arg.port;
+            conf.mongo.username = arg.username;
+            conf.mongo.password = arg.password;
+            conf.mongo.database = arg.database;
 
-    fs.writeFileSync(confProdPath, JSON.stringify(conf, null, 4));
+            fs.writeFileSync(confProdPath, JSON.stringify(conf, null, 4));
+        }
+
+        logger.log('info', 'Connected to mongo server');
+    });
 
     logger.log('info', 'Initialized options');
 };
@@ -181,12 +187,37 @@ optionSchema.statics.initMongo = function (arg) {
  *
  * <ol>
  *     <li>删除 resources/noty-prod.json 文件</li>
+ *     <li>删除数据库中所有数据</li>
  * </ol>
  */
 optionSchema.statics.initAg = function () {
     if (fs.existsSync(confProdPath)) {
         fs.unlinkSync(confProdPath);
     }
+
+    Post.remove(function (err) {
+        if (err) {
+            throw err;
+        }
+    });
+
+    Tag.remove(function (err) {
+        if (err) {
+            throw err;
+        }
+    });
+
+    Option.remove(function(err){
+        if (err) {
+            throw err;
+        }
+    });
+
+    User.remove(function(err){
+        if (err) {
+            throw err;
+        }
+    });
 
     logger.log('info', 'Noty has been reset, please initialize it again');
 };
