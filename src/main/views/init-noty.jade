@@ -1,0 +1,21 @@
+extends layout
+block content
+    div.wrap
+        div.segment.fn-clear
+            div.header
+                div.step.active 初始化 mongo
+                div.step.disabled 初始化 noty
+            label.label 标题
+                input#title.input(value="B3log Noty")
+            label.label 子标题
+                input#subTitle.input(value="专注于知识整理与分享")
+            label.label 用户名
+                input#userName.input(value="Admin")
+            label.label 密码
+                input#password.input(value="noty")
+            label.label 邮箱
+                input#email.input(value="")
+            button.button.fn-right.green 初始化
+block scripts
+    script(src='/static/javascripts/lib/jquery-2.1.0.min.js')
+    script(src='/static/javascripts/init.js')

@@ -1,0 +1,19 @@
+extends layout
+block content
+    div.wrap
+        div.segment.fn-clear
+            label.label 服务地址
+                input#hostname.input(value="localhost")
+            label.label 服务端口
+                input#port.input(value="27017")
+            label.label 用户名
+                input#username.input(value="")
+            label.label 密码
+                input#password.input(value="")
+            label.label 数据库
+                input#database.input(value="b3log-noty")
+            button.button.fn-right.orange 初始化
+
+block scripts
+    script(src='/static/javascripts/lib/jquery-2.1.0.min.js')
+    script(src='/static/javascripts/init.js')

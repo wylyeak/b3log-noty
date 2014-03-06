@@ -46,6 +46,13 @@ app.use(express.urlencoded());
 // TODO: app.use(express.cookieParser('your secret here'));
 // TODO: app.use(express.session());
 app.use(function (req, res, next) {
+    if (req.path.indexOf('/static') > -1) { // 如果请求静态资源
+        // 则直接交给 Express 处理
+        next();
+
+        return;
+    }
+
     logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
 
     // 如果 Noty 没有进行过初始化，则重定向到初始化向导页面

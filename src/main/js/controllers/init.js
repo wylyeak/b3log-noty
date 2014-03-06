@@ -37,11 +37,11 @@ var Option = require('../models/option');
 module.exports.controller = function (app) {
 
     app.get('/init/mongo', function (req, res) {
-        res.render('init', { title: 'Noty - register' });
+        res.render('init-mongo', { title: 'Noty - register' });
     });
 
     app.get('/init/noty', function (req, res) {
-        res.render('init', { title: 'Noty - register' });
+        res.render('init-noty', { title: 'Noty - register' });
     });
 
     app.post('/init/mongo', function (req, res) {

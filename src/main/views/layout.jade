@@ -2,8 +2,10 @@ doctype html
 html
     head
         title= title
-        link(rel='stylesheet', href='/stylesheets/base.css')
+        link(rel='stylesheet', href='/static/stylesheets/base.css')
     body
         include common/header
         block content
         include common/footer
+        block scripts
+            script(src='/static/javascripts/lib/jquery-2.1.0.min.js')
