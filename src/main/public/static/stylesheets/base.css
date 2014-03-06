@@ -267,8 +267,8 @@ textarea {
 
 .segment .header .step {
     -moz-box-sizing: border-box;
-    background-color: #FFFFFF;
-    color: #CBCBCB;
+    background-color: #EFEFEF;
+    color: #BBB;
     display: inline-block;
     padding: 1em 2em 1em 3em;
     position: relative;
@@ -297,7 +297,7 @@ textarea {
 
 .segment .header .disabled:after {
     background-color: #555555;
-    border-left: 1.7em solid #FFF;
+    border-left: 1.7em solid #EFEFEF;
 }
 
 .segment .header .step:first-child {
@@ -311,5 +311,4 @@ textarea {
 .segment .header .step:last-child:after {
     display: none;
 }
-
 /* end common */
