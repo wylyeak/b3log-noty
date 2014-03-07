@@ -27,14 +27,22 @@ var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var express = require('express');
-var i18n = require('i18n-2');
+var I18n = require('i18n-2');
 var noty = require('./noty');
 var logger = noty('logger');
 var Option = require('./models/option');
+var conf = require('../resources/noty.json');
 var app = express();
 
 // 环境准备
-i18n.expressBind(app, noty('i18n')); // 国际化工具绑定请求
+// 国际化配置
+var i18nConf = {
+    directory: path.join(__dirname, conf.i18n.directory),
+    extension: conf.i18n.extension,
+    locales: conf.i18n.locales
+};
+I18n.expressBind(app, i18nConf); // 国际化工具绑定请求
+
 app.set('port', 8080);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');

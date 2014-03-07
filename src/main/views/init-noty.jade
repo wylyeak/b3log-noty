@@ -3,19 +3,19 @@ block content
     div.wrap
         div.segment.fn-clear
             div.header
-                div.step.disabled 初始化 mongo
-                div.step.active 初始化 noty
-            label.label 标题
+                div.step.disabled #{__("init")} mongo
+                div.step.active #{__("init")} noty
+            label.label #{__("title")}
                 input#title.input(value="B3log Noty")
-            label.label 子标题
-                input#subTitle.input(value="专注于知识整理与分享")
-            label.label 用户名
+            label.label #{__("subTitle")}
+                input#subTitle.input(value="#{__("b3log-noty-des")}")
+            label.label #{__("userName")}
                 input#userName.input(value="Admin")
-            label.label 密码
+            label.label #{__("password")}
                 input#password.input(value="noty")
-            label.label 邮箱
+            label.label #{__("email")}
                 input#email.input(value="")
-            button.button.fn-right.green 初始化
+            button.button.fn-right.green #{__("init")}
 block scripts
     script(src='/static/javascripts/lib/jquery-2.1.0.min.js')
     script(src='/static/javascripts/init.js')

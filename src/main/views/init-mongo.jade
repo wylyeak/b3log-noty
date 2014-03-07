@@ -3,19 +3,19 @@ block content
     div.wrap
         div.segment.fn-clear
             div.header
-                div.step.active 初始化 mongo
-                div.step.disabled 初始化 noty
-            label.label 服务地址
+                div.step.active #{__("init")} mongo
+                div.step.disabled #{__("init")} noty
+            label.label #{__("hostname")}
                 input#hostname.input(value="localhost")
-            label.label 服务端口
+            label.label #{__("port")}
                 input#port.input(value="27017")
-            label.label 用户名
+            label.label #{__("userName")}
                 input#username.input(value="")
-            label.label 密码
+            label.label #{__("passwordd")}
                 input#password.input(value="")
-            label.label 数据库
+            label.label #{__("database")}
                 input#database.input(value="b3log-noty")
-            button.button.fn-right.orange 初始化
+            button.button.fn-right.orange #{ __("init")}
 
 block scripts
     script(src='/static/javascripts/lib/jquery-2.1.0.min.js')

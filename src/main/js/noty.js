@@ -45,10 +45,10 @@ module.exports = function (serviceName) {
     return service[serviceName];
 };
 
-var configs = require('../resources/noty.json');
+var conf = require('../resources/noty.json');
 
 // 日志工具
-var logConfig = configs.logger;
+var logConfig = conf.logger;
 var logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
@@ -63,15 +63,12 @@ var logger = new (winston.Logger)({
 // 注册日志工具
 service.logger = logger;
 
-// 国际化配置
-var i18nConfig = configs.i18n;
-var i18nConf = {
-    directory: path.join(__dirname, '../resources/locales'),
-    extension: '.json',
-    locales: i18nConfig.locales
-};
 // 注册国际化工具
-service.i18n = new I18n(i18nConf);
+service.i18n = new I18n({
+    directory: path.join(__dirname, conf.i18n.directory),
+    extension: conf.i18n.extension,
+    locales: conf.i18n.locales
+});
 
 // 通用 util 集合
 // underscore 集成 underscore.string
@@ -81,9 +78,9 @@ _.mixin(_.str.exports());
 service._ = _;
 
 //数据库
-var mongoConfig = configs.mongo;
-var mongoURL = 'mongodb://' + mongoConfig.username + ':' + mongoConfig.password + '@' +
-    mongoConfig.hostname + ':' + mongoConfig.port + '/' + mongoConfig.database;
+var mongoConf = conf.mongo;
+var mongoURL = 'mongodb://' + mongoConf.username + ':' + mongoConf.password + '@' +
+    mongoConf.hostname + ':' + mongoConf.port + '/' + mongoConf.database;
 // 连接数据库
 mongoose.connection.on('connected', function (ref) {
     logger.log('info', 'Connected to mongo server');

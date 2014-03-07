@@ -1,8 +1,17 @@
 {
-    "invalidFormat": "格式错误",
-    "hello": "你好",
-
-
-    "helloWorldTitle": "世界，你好！",
-    "helloWorldContent": "<p><a href='https://github.com/b3log/b3log-noty'>Noty</a> [nəuti] 是一个用于知识管理与分享的网络应用，您可以用它来记便签，也可以用它来写博客，甚至可以用它来订阅您感兴趣的信息，但最重要的是您可以用它来整理知识，并把这些知识分享给他人。</p><p>您已经迈出了奇妙旅程的第一步，接下来让我们带领您吧！</p>"
+	"invalidFormat": "格式错误",
+	"hello": "你好",
+	"hostname": "服务地址",
+	"port": "端口",
+	"database": "数据库",
+	"b3log-noty-des": "专注知识整理与分享",
+	"init": "初始化",
+	"title": "标题",
+	"subTitle": "子标题",
+	"userName": "用户名",
+	"password": "密码",
+	"email": "邮箱",
+	"helloWorldTitle": "世界，你好！",
+	"helloWorldContent": "<p><a href='https://github.com/b3log/b3log-noty'>Noty</a> [nəuti] 是一个用于知识管理与分享的网络应用，您可以用它来记便签，也可以用它来写博客，甚至可以用它来订阅您感兴趣的信息，但最重要的是您可以用它来整理知识，并把这些知识分享给他人。</p><p>您已经迈出了奇妙旅程的第一步，接下来让我们带领您吧！</p>",
+	"passwordd": "passwordd"
 }
