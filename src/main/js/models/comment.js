@@ -58,7 +58,7 @@ var commentSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
-function toLower (v) {
+function toLower(v) {
     return v.toLowerCase();
 }
 

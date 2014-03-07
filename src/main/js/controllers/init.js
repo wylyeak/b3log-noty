@@ -59,7 +59,7 @@ module.exports.controller = function (app) {
             database: req.param('database')
         };
 
-        Option.initMongo(arg, function(result) {
+        Option.initMongo(arg, function (result) {
             switch (result) {
                 case 'inited':
                 case 'succ':
@@ -85,7 +85,7 @@ module.exports.controller = function (app) {
             subTitle: req.param('subTitle')
         };
 
-        var result = Option.initNoty(arg, function(result) {
+        var result = Option.initNoty(arg, function (result) {
             switch (result) {
                 case 'inited':
                 case 'succ':

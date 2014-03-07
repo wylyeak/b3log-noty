@@ -67,7 +67,6 @@ var optionSchema = new Schema({
 });
 
 
-
 /**
  * 初始化数据库。
  *
