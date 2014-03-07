@@ -46,6 +46,7 @@ describe('Option Model Static Operations', function () {
                 hostname: conf.mongo.hostname,
                 port: conf.mongo.port,
                 database: conf.mongo.database
+            }, function () {
             });
         });
     });
@@ -58,6 +59,7 @@ describe('Option Model Static Operations', function () {
                 userName: "88250",
                 email: "DL88250@gmail.com",
                 password: "test"
+            }, function () {
             });
         });
     })

@@ -31,7 +31,11 @@
             password: $("#password").val(),
             database: $("#database").val()
         }, function( data ) {
-            console.log( data );
+            if (true === data) {
+                window.location.href = "noty";
+            } else {
+                alert(data);
+            }
         });
     });
 
@@ -43,7 +47,11 @@
             password: $("#password").val(),
             email: $("#email").val()
         }, function( data ) {
-            console.log( data );
+            if (true === data) {
+                window.location.href = "/";
+            } else {
+                alert(data);
+            }
         });
     });
 })();

@@ -33,29 +33,47 @@
 "use strict";
 
 var Option = require('../models/option');
+var noty = require('../noty');
+var i18n = noty('i18n');
 
 module.exports.controller = function (app) {
 
     app.get('/init/mongo', function (req, res) {
-        res.render('init-mongo', { title: 'Noty - register' });
+        if (Option.isInited()) {
+            res.redirect('/');
+        }
+
+        res.render('init-mongo', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
     });
 
     app.get('/init/noty', function (req, res) {
-        res.render('init-noty', { title: 'Noty - register' });
+        res.render('init-noty', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
     });
 
     app.post('/init/mongo', function (req, res) {
         var arg = {
-            hostname: 'localhost',
-            port: '27017',
-            username: '',
-            password: '',
-            database: 'b3log-noty'
+            hostname: req.param('hostname'),
+            port: req.param('port'),
+            username: req.param('username'),
+            password: req.param('password'),
+            database: req.param('database')
         };
 
-        Option.initMongo(arg);
+        Option.initMongo(arg, function(result) {
+            switch (result) {
+                case 'inited':
+                case 'succ':
+                    res.send(true);
 
-        res.send('inited mongo');
+                    break;
+                case 'failed':
+                    res.send(i18n.__('dbConnErr'));
+
+                    break;
+                default :
+                    res.send(i18n.__('unknownErr'));
+            }
+        });
     });
 
     app.post('/init/noty', function (req, res) {
@@ -67,12 +85,16 @@ module.exports.controller = function (app) {
             subTitle: req.param('subTitle')
         };
 
-        Option.initNoty(arg);
+        var result = Option.initNoty(arg, function(result) {
+            switch (result) {
+                case 'inited':
+                case 'succ':
+                    res.send(true);
 
-        res.send('inited noty');
-    });
-
-    app.get('/init/ag', function (req, res) {
-       Option.initAg();
+                    break;
+                default:
+                    res.send(i18n.__('unknownErr'));
+            }
+        });
     });
 };

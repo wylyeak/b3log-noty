@@ -21,7 +21,14 @@
         "username": "",
         "password": "",
         "database": "b3log-noty"
-    }
+    },
+    "reserved": {
+        "urls": [
+            "/",
+            "/init/mongo",
+            "/init/noty"
 
+        ]
+    }
 
 }

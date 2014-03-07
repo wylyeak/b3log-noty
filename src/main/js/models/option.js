@@ -68,6 +68,63 @@ var optionSchema = new Schema({
 });
 
 /**
+ * 初始化数据库。
+ *
+ * arg 初始化实参，例如
+ * <pre>
+ * {
+ *     hostname: "",
+ *     port: "",
+ *     username: "",
+ *     password: "",
+ *     database: ""
+ * }
+ * </pre>
+ */
+optionSchema.statics.initMongo = function (arg, callback) {
+    var initedDB = fs.existsSync(confProdPath);
+
+    if (initedDB) {
+        callback('inited');
+
+        return;
+    }
+
+    logger.log('info', 'Initializing database');
+
+    var mongoURL = 'mongodb://' + arg.username + ':' + arg.password + '@' +
+        arg.hostname + ':' + arg.port + '/' + arg.database;
+
+    mongoose.connection.close(); // 无论是否有已打开的连接，先关闭一次，避免下面进行连接时报错
+    mongoose.connect(mongoURL);
+
+    mongoose.connection.on('connected', function () {
+        if (!initedDB) {
+            // 保存配置
+            conf.mongo.hostname = arg.hostname;
+            conf.mongo.port = arg.port;
+            conf.mongo.username = arg.username;
+            conf.mongo.password = arg.password;
+            conf.mongo.database = arg.database;
+
+            fs.writeFileSync(confProdPath, JSON.stringify(conf, null, 4));
+
+            logger.log('info', 'Initialized options');
+
+            callback('succ');
+
+            return;
+        }
+    });
+
+    mongoose.connection.on('error', function (err) {
+        callback('failed');
+
+        return;
+    });
+};
+
+/**
  * 初始化应用参数配置。
  *
  * arg 初始化实参，例如
@@ -81,11 +138,11 @@ var optionSchema = new Schema({
  * }
  * </pre>
  */
-optionSchema.statics.initNoty = function (arg) {
+optionSchema.statics.initNoty = function (arg, callback) {
     var initedDB = fs.existsSync(confProdPath);
 
-    if (!initedDB) {
-        logger.log('info', 'Database has not initialized yet');
+    if (initedDB) {
+        callback('inited');
 
         return;
     }
@@ -94,7 +151,9 @@ optionSchema.statics.initNoty = function (arg) {
         if (0 < options.length) {
             logger.log('info', 'Options has already initialized');
 
-            return; // 如果已经初始化过则不再初始化
+            callback('inited');
+
+            return;
         }
 
         logger.log('info', 'Initializing options');
@@ -142,44 +201,9 @@ optionSchema.statics.initNoty = function (arg) {
         post.publish();
 
         logger.log('info', 'Initialized options');
+
+        callback('succ');
     });
-};
-
-/**
- * 初始化数据库。
- */
-optionSchema.statics.initMongo = function (arg) {
-    var initedDB = fs.existsSync(confProdPath);
-
-    if (initedDB) {
-        logger.log('info', 'Database has already initialized');
-
-        return;
-    }
-
-    logger.log('info', 'Initializing database');
-
-    var mongoURL = 'mongodb://' + arg.username + ':' + arg.password + '@' +
-        arg.hostname + ':' + arg.port + '/' + arg.database;
-
-    mongoose.connect(mongoURL);
-
-    mongoose.connection.on('connected', function (ref) {
-        if (!initedDB) {
-            // 保存配置
-            conf.mongo.hostname = arg.hostname;
-            conf.mongo.port = arg.port;
-            conf.mongo.username = arg.username;
-            conf.mongo.password = arg.password;
-            conf.mongo.database = arg.database;
-
-            fs.writeFileSync(confProdPath, JSON.stringify(conf, null, 4));
-        }
-
-        logger.log('info', 'Connected to mongo server');
-    });
-
-    logger.log('info', 'Initialized options');
 };
 
 /**
@@ -207,26 +231,26 @@ optionSchema.statics.initAg = function () {
         }
     });
 
-    Option.remove(function(err){
+    Option.remove(function (err) {
         if (err) {
             throw err;
         }
     });
 
-    User.remove(function(err){
+    User.remove(function (err) {
         if (err) {
             throw err;
         }
     });
 
-    logger.log('info', 'Noty has been reset, please initialize it again');
+    logger.log('info', 'Noty has been reset');
 };
 
 /**
  * 判断 Noty 是否已经初始化完毕。
  */
 optionSchema.statics.isInited = function () {
-   return fs.existsSync(confProdPath);
+    return fs.existsSync(confProdPath);
 };
 
 // 导出文章模型

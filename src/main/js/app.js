@@ -81,10 +81,12 @@ app.use(app.router);
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 
-    app.get('/dev/reset', function () {
+    app.get('/dev/reset', function (req, res) {
         var Option = require('./models/option');
 
         Option.initAg();
+
+        res.redirect('/');
     });
 }
 
