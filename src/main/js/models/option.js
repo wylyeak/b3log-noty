@@ -23,13 +23,12 @@
  *         <li>初始化数据库</li>
  *         <li>初始化应用参数配置</li>
  *     </ol>
- *     第一个步骤执行成功的话将以 noty.json 为模版创建 noty-prod.json，第二个步骤会更新这个配置文件。
- *     调用 initAg 时会删除这个配置文件，恢复初始化状态。
+ *     第一个步骤执行成功的话将以 noty.json 为模版创建 noty-prod.json，第二个步骤会将一些配置保存到数据库。
  * </p>
  *
  * @author Steven Yao<wmainlove@gmail.com>
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.1, Mar 3, 2014
+ * @version 1.0.0.2, Mar 7, 2014
  * @since 1.0.0
  */
 
@@ -44,7 +43,7 @@ var User = require('./user');
 var Post = require('./post');
 var Tag = require('./tag');
 var logger = noty('logger');
-var conf = require('../../resources/noty.json');
+var conf = require('../../resources/noty.json'); // 注意这里使用的是基础配置模版，而不是 noty('conf')
 var Schema = mongoose.Schema;
 
 var confProdPath = path.join(__dirname, '../../resources/noty-prod.json');
@@ -66,6 +65,8 @@ var optionSchema = new Schema({
      */
     value: {type: String}
 });
+
+
 
 /**
  * 初始化数据库。
@@ -139,18 +140,8 @@ optionSchema.statics.initMongo = function (arg, callback) {
  * </pre>
  */
 optionSchema.statics.initNoty = function (arg, callback) {
-    var initedDB = fs.existsSync(confProdPath);
-
-    if (initedDB) {
-        callback('inited');
-
-        return;
-    }
-
     Option.find(function (err, options) {
         if (0 < options.length) {
-            logger.log('info', 'Options has already initialized');
-
             callback('inited');
 
             return;
@@ -180,14 +171,6 @@ optionSchema.statics.initNoty = function (arg, callback) {
         });
 
         admin.save();
-
-        // 保存配置
-        var confProd = require(confProdPath);
-
-        confProd.base.title = arg.title;
-        confProd.base.subTitle = arg.subTitle;
-
-        fs.writeFile(confProdPath, JSON.stringify(confProd, null, 4));
 
         // 发布 "Hello World!" 文章
         var post = new Post({
@@ -244,13 +227,6 @@ optionSchema.statics.initAg = function () {
     });
 
     logger.log('info', 'Noty has been reset');
-};
-
-/**
- * 判断 Noty 是否已经初始化完毕。
- */
-optionSchema.statics.isInited = function () {
-    return fs.existsSync(confProdPath);
 };
 
 // 导出文章模型

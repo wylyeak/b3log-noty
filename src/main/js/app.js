@@ -30,8 +30,9 @@ var express = require('express');
 var I18n = require('i18n-2');
 var noty = require('./noty');
 var logger = noty('logger');
-var Option = require('./models/option');
-var conf = require('../resources/noty.json');
+var conf = noty('conf');
+var util = noty('_');
+
 var app = express();
 
 // 环境准备
@@ -64,7 +65,7 @@ app.use(function (req, res, next) {
     logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
 
     // 如果 Noty 没有进行过初始化，则重定向到初始化向导页面
-    if (!Option.isInited() && '/init/mongo' !== req.path) {
+    if (!util.isInited() && '/init/mongo' !== req.path) {
         logger.log('info', 'B3log Noty has not been initialized yet, redirect requests to Init Wizard');
 
         res.redirect('/init/mongo');

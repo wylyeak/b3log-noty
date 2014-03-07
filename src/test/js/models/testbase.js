@@ -14,35 +14,28 @@
  * limitations under the License.
  */
 
-
 /**
- * @file 用户参数配置。
- *
- * <ul>
- *     <li>更新偏好设定：/prefs?key=xxx&value=xxx, PUT</li>
- * </ul>
- *
- * @author Steven Yao<wmainlove@gmail.com>
+ * @file 测试用例基础模块。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.1, Mar 7, 2014
+ * @version 1.0.0.0, Mar 7, 2014
  * @since 1.0.0
  */
 
-"use strict";
+var mongoose = require('mongoose');
+var mongoURL = 'mongodb://localhost/b3log-noty';
 
-var noty = require('../noty');
-var logger = noty('logger');
-var Option = require('../models/option');
+exports.setup = function() {
+    mongoose.connection.on('error', function (err) {
+        console.log('Could not connect to mongo server, skips tests [' + err + ']');
 
-module.exports.controller = function (app) {
-
-    app.get('/prefs', function (req, res) {
-        logger.log('info', req.query.key + "=" + req.query.value);
-
-        Option.update({category: 'prefs', key: req.query.key}, {value: req.query.value}, function () {
-            logger.log('info', '!!!!!!!!!!');
-
-            res.send(true);
-        });
+        exports.skipTests = true;
     });
-};
+
+    if (0 === mongoose.connection.readyState) {
+        mongoose.connect(mongoURL);
+    }
+}
+
+exports.shutdown = function () {
+    // 数据库连接会由测试进程自动关闭
+}

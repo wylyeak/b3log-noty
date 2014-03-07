@@ -34,11 +34,12 @@
 var Option = require('../models/option');
 var noty = require('../noty');
 var i18n = noty('i18n');
+var util = noty('_');
 
 module.exports.controller = function (app) {
 
     app.get('/init/mongo', function (req, res) {
-        if (Option.isInited()) {
+        if (util.isInited()) {
             res.redirect('/');
         }
 

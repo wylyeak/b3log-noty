@@ -1,10 +1,4 @@
 {
-    "base": {
-        "title": "B3log Noty",
-        "subTitle": "专注于知识整理与分享",
-        "version": "1.0.0"
-    },
-
     "logger": {
         "level": "debug"
     },
@@ -22,6 +16,7 @@
         "password": "",
         "database": "b3log-noty"
     },
+
     "reserved": {
         "urls": [
             "/",

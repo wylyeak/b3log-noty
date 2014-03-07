@@ -18,7 +18,7 @@
  * @file 发布相关处理处理。
  *
  * <ul>
- *     <li>发布：/post, POST</li>
+ *     <li>发布：/post, PUT</li>
  * </ul>
  *
  * @author Liang Ding <DL88250@gmail.com>
