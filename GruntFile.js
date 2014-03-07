@@ -86,9 +86,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'src/main/public/javascripts',
+                        cwd: 'src/main/public/static/javascripts',
                         src: '**/*.js',
-                        dest: 'target/public/javascripts'
+                        dest: 'target/public/static/javascripts'
                     },
                     {
                         expand: true,
@@ -102,9 +102,9 @@ module.exports = function (grunt) {
         cssmin: {
             minify: {
                 expand: true,
-                cwd: 'src/main/public/stylesheets',
+                cwd: 'src/main/public/static/stylesheets',
                 src: ['*.css', '!*.min.css'],
-                dest: 'target/public/stylesheets'
+                dest: 'target/public/static/stylesheets'
             }
         },
         jshint: {
@@ -127,9 +127,9 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'src/main/public/images',
+                        cwd: 'src/main/public/static/images',
                         src: ['**'],
-                        dest: 'target/public/images'
+                        dest: 'target/public/static/images'
                     },
                     {
                         expand: true,
@@ -139,9 +139,9 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
-                        cwd: 'src/main/views',
-                        src: ['**'],
-                        dest: 'target/views'
+
+                        src: ['package.json'],
+                        dest: 'target'
                     }
                 ]
             }
