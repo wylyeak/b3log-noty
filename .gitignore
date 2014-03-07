@@ -4,6 +4,7 @@
 node_modules/
 .idea/workspace.xml
 .idea/jsLibraryMappings.xml
+.idea/dictionaries/
 target/
 doc/
 npm-debug.log

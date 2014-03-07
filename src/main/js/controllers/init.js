@@ -21,12 +21,11 @@
  *     <li>展现初始化应用页面：/init/noty, GET</li>
  *     <li>初始化数据库：/init/mongo, POST</li>
  *     <li>初始化应用：/init/noty, POST</li>
- *     <li>恢复初始化状态：/init/ag, POST</li>
  * </ul>
  *
  * @author Liyuan Li <http://vanessa.b3log.org>
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.2, Mar 4, 2014
+ * @version 1.0.0.3, Mar 7, 2014
  * @since 1.0.0
  */
 
