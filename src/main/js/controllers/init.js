@@ -39,15 +39,29 @@ var util = noty('_');
 module.exports.controller = function (app) {
 
     app.get('/init/mongo', function (req, res) {
-        if (util.isInited()) {
+        if (util.isInited(2)) { // 初始化应用参数配置（步骤 2）已经完成（整个初始化已经完成）
             res.redirect('/');
+
+            return;
+        }
+
+        if (util.isInited(1)) { // 初始化 mongo（步骤 1）已经完成
+            res.redirect('/init/noty');
+
+            return;
         }
 
         res.render('init-mongo', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
     });
 
     app.get('/init/noty', function (req, res) {
-        res.render('init-noty', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
+        if (util.isInited(1)) { // 初始化 mongo（步骤 1）已经完成
+            res.render('init-noty', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
+
+            return;
+        } else {
+            res.redirect('/');
+        }
     });
 
     app.post('/init/mongo', function (req, res) {

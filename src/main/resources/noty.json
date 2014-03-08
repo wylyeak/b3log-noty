@@ -1,14 +1,4 @@
 {
-    "logger": {
-        "level": "debug"
-    },
-
-    "i18n": {
-        "directory": "../resources/locales",
-        "extension": ".json",
-        "locales": ["zh_CN"]
-    },
-
     "mongo": {
         "hostname": "localhost",
         "port": "27017",
@@ -16,7 +6,15 @@
         "password": "",
         "database": "b3log-noty"
     },
-
+    "init": 0,
+    "logger": {
+        "level": "debug"
+    },
+    "i18n": {
+        "directory": "../resources/locales",
+        "extension": ".json",
+        "locales": ["zh_CN"]
+    },
     "reserved": {
         "urls": [
             "/",
@@ -25,5 +23,4 @@
 
         ]
     }
-
 }

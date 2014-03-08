@@ -38,6 +38,7 @@ var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose');
 var noty = require('../noty');
+var util = noty('_');
 var i18n = noty('i18n');
 var User = require('./user');
 var Post = require('./post');
@@ -82,7 +83,7 @@ var optionSchema = new Schema({
  * </pre>
  */
 optionSchema.statics.initMongo = function (arg, callback) {
-    var initedDB = fs.existsSync(confProdPath);
+    var initedDB = util.isInited(1);
 
     if (initedDB) {
         callback('inited');
@@ -107,9 +108,12 @@ optionSchema.statics.initMongo = function (arg, callback) {
             conf.mongo.password = arg.password;
             conf.mongo.database = arg.database;
 
+            // 更新步骤标识，1 表示初始化数据（步骤 1）已经完成
+            conf.init = 1;
+
             fs.writeFileSync(confProdPath, JSON.stringify(conf, null, 4));
 
-            logger.log('info', 'Initialized options');
+            logger.log('info', 'Initialized database');
 
             callback('succ');
 
@@ -139,53 +143,59 @@ optionSchema.statics.initMongo = function (arg, callback) {
  * </pre>
  */
 optionSchema.statics.initNoty = function (arg, callback) {
-    Option.find(function (err, options) {
-        if (0 < options.length) {
-            callback('inited');
+    var initedNoty = util.isInited(2);
 
-            return;
-        }
+    if (initedNoty) {
+        callback('inited');
 
-        logger.log('info', 'Initializing options');
+        return;
+    }
 
-        // 初始化参数配置
-        new Option({ // 标题
-            category: 'prefs',
-            key: 'title',
-            value: arg.title
-        }).save();
+    logger.log('info', 'Initializing Noty');
 
-        new Option({ // 子标题
-            category: 'prefs',
-            key: 'subTitle',
-            value: arg.subTitle
-        }).save();
+    // 初始化参数配置
+    new Option({ // 标题
+        category: 'prefs',
+        key: 'title',
+        value: arg.title
+    }).save();
 
-        // 初始化管理员用户
-        var admin = new User({
-            name: arg.userName,
-            email: arg.email,
-            password: arg.password,
-            role: 'Admin'
-        });
+    new Option({ // 子标题
+        category: 'prefs',
+        key: 'subTitle',
+        value: arg.subTitle
+    }).save();
 
-        admin.save();
-
-        // 发布 "Hello World!" 文章
-        var post = new Post({
-            title: i18n.__('helloWorldTitle'),
-            abstract: i18n.__('helloWorldContent'),
-            authorId: admin.id,
-            content: i18n.__('helloWorldContent'),
-            tags: [new Tag({title: 'B3log Noty'})]
-        });
-
-        post.publish();
-
-        logger.log('info', 'Initialized options');
-
-        callback('succ');
+    // 初始化管理员用户
+    var admin = new User({
+        name: arg.userName,
+        email: arg.email,
+        password: arg.password,
+        role: 'Admin'
     });
+
+    admin.save();
+
+    // 发布 "Hello World!" 文章
+    var post = new Post({
+        title: i18n.__('helloWorldTitle'),
+        abstract: i18n.__('helloWorldContent'),
+        authorId: admin.id,
+        content: i18n.__('helloWorldContent'),
+        tags: [new Tag({title: 'B3log Noty'})]
+    });
+
+    post.publish();
+
+    var conf = require(confProdPath); // 此时生产配置一定存在
+    // 更新步骤标识，2 表示初始化应用（步骤 2）已经完成
+    conf.init = 2;
+
+    fs.writeFileSync(confProdPath, JSON.stringify(conf, null, 4));
+
+    logger.log('info', 'Initialized Noty');
+
+    callback('succ');
 };
 
 /**

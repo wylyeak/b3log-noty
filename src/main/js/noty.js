@@ -30,7 +30,6 @@ var I18n = require('i18n-2');
 var mongoose = require('mongoose');
 var winston = require('winston');
 var moment = require('moment');
-var confProdPath = path.join(__dirname, '../resources/noty-prod.json');
 
 /**
  * 公共服务。
@@ -55,17 +54,38 @@ _.str = require('underscore.string');
 _.mixin(_.str.exports());
 _.mixin({
     /**
-     * 判断 Noty 是否已经初始化完毕。
+     * 判断 Noty 是否处于指定的初始化步骤。
      */
-    isInited: function () {
-        return fs.existsSync(confProdPath);
+    isInited: function (step) {
+        var inited = this.getInited();
+        if (-1 === inited) {
+            return false;
+        }
+
+        return step === inited;
+    },
+
+    /**
+     * 返回 Noty 当前处于的初始化步骤。
+     */
+    getInited: function() {
+        var confProdPath = path.join(__dirname, '../resources/noty-prod.json');
+        var exists = fs.existsSync(confProdPath);
+
+        if (!exists) { // 不存在 noty-prod.json 的话任何步骤都还没开始
+            return -1;
+        }
+
+        var confBuffer = fs.readFileSync(confProdPath);
+
+        return JSON.parse(confBuffer.toString()).init;
     }
 });
 // 注册通用 utils
 service._ = _;
 
 var conf;
-if (!_.isInited()) {
+if (!_.isInited(2)) {
     conf = require('../resources/noty.json');
 } else {
     conf = require('../resources/noty-prod.json');
@@ -83,7 +103,8 @@ var logger = new (winston.Logger)({
             'timestamp': function () {
                 return moment().format('YYYY-MM-DD hh:mm:ss');
             },
-            'colorize': true
+            'colorize': true,
+            'prettyPrint': true
         })
     ]
 });
@@ -97,8 +118,8 @@ service.i18n = new I18n({
     locales: conf.i18n.locales
 });
 
-// 如果用户已经初始化过 noty 了，则在此时连接 mongo，否则会在初始化过程中连接（option#initMongo）
-if (_.isInited()) {
+// 如果用户已经初始化过 mongo （步骤 1）了，则在此时连接 mongo，否则会在初始化过程中连接（option#initMongo）
+if (_.isInited(1)) {
     var mongoConf = conf.mongo;
     var mongoURL = 'mongodb://' + mongoConf.username + ':' + mongoConf.password + '@' +
         mongoConf.hostname + ':' + mongoConf.port + '/' + mongoConf.database;

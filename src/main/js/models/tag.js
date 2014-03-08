@@ -49,7 +49,7 @@ var Tag = mongoose.model('Tag', tagSchema);
  */
 tagSchema.pre('save', function (next) {
     Tag.find().where('title').equals(this.title).exec(function (err, tags) {
-        if (!tags) { // 不存在的话继续推进保存
+        if (!tags || 0>= tags.length) { // 不存在的话继续推进保存
             next();
         }
     });

@@ -64,16 +64,36 @@ app.use(function (req, res, next) {
 
     logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
 
-    // 如果 Noty 没有进行过初始化，则重定向到初始化向导页面
-    if (!util.isInited() && '/init/mongo' !== req.path) {
-        logger.log('info', 'B3log Noty has not been initialized yet, redirect requests to Init Wizard');
+    var inited = util.getInited();
+    switch (inited) {
+        case 2: // 整个初始化过程已经完毕
+            next(); // 推进请求处理
 
-        res.redirect('/init/mongo');
+            break;
+        case 1: // 完成初始化数据库（步骤 1）
+            if ('/init/noty' === req.path) {
+                next();
 
-        return;
+                break;
+            }
+
+            res.redirect('/init/noty'); // 重定向到初始化应用（步骤 2）
+
+            break;
+        case 0: // 这两种情况都是还未初始化数据库
+        case -1:
+            if ('/init/mongo' === req.path) {
+                next();
+
+                break;
+            }
+
+            res.redirect('/init/mongo');
+
+            break;
     }
 
-    next();
+
 });
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(app.router);

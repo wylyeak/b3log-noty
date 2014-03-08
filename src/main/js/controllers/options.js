@@ -37,11 +37,7 @@ var Option = require('../models/option');
 module.exports.controller = function (app) {
 
     app.get('/prefs', function (req, res) {
-        logger.log('info', req.query.key + "=" + req.query.value);
-
         Option.update({category: 'prefs', key: req.query.key}, {value: req.query.value}, function () {
-            logger.log('info', '!!!!!!!!!!');
-
             res.send(true);
         });
     });
