@@ -18,7 +18,7 @@
  * @file    后台标签处理。
  *
  * <ul>
- *     <li>展现后台标签：/tag-forge, GET</li>
+ *     <li>展现后台标签：/console/tag-forge, GET</li>
  * </ul>
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>

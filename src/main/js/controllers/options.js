@@ -19,8 +19,8 @@
  * @file 用户参数配置。
  *
  * <ul>
- *     <li>展现参数配置：/settings，GET</li>
- *     <li>更新参数配置：/setting?cat=xxx&key=xxx&value=xxx, PUT</li>
+ *     <li>展现参数配置：/console/settings，GET</li>
+ *     <li>更新参数配置：/console/setting?cat=xxx&key=xxx&value=xxx, PUT</li>
  * </ul>
  *
  * @author Steven Yao<wmainlove@gmail.com>
