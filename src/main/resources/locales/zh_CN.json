@@ -17,7 +17,7 @@
 	"helloWorldContent": "<p><a href='https://github.com/b3log/b3log-noty'>Noty</a> [nəuti] 是一个用于知识管理与分享的网络应用，您可以用它来记便签，也可以用它来写博客，甚至可以用它来订阅您感兴趣的信息，但最重要的是您可以用它来整理知识，并把这些知识分享给他人。</p><p>您已经迈出了奇妙旅程的第一步，接下来让我们带领您吧！</p>",
 	"unknownErr": "未知异常",
 	"dbConnErr": "数据库连接存在异常",
-    "tagForge": "标签图",
-    "newArticl": "新建文章",
-    "settings": "参数设置"
+	"tagForge": "标签图",
+	"newArticl": "新建文章",
+	"settings": "参数设置"
 }
