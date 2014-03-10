@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/static/stylesheets/base.css')
+    body
+        include ../../common/header
+        div.wrap.fn-clear
+            div.side
+                include side
+            div.content
+                block content
+        include ../../common/footer
+        block scripts
+            script(src='/static/javascripts/lib/jquery-2.1.0.min.js')

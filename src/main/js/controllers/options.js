@@ -38,8 +38,8 @@ var Option = require('../models/option');
 
 module.exports.controller = function (app) {
 
-    app.get('/settings', function (req, res){
-        res.render('admin/settings', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
+    app.get('/console/settings', function (req, res){
+        res.render('console/settings', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
 
         return;
     })

@@ -32,7 +32,11 @@ var i18n = noty('i18n');
 
 module.exports.controller = function (app) {
 
-    app.get('/tag-forge', function (req, res) {
-        res.render('admin/tag-forge', { title: i18n.__('tagForge') + ' - Noty'});
+    app.get('/console', function (req, res) {
+        res.render('console/index', { title: i18n.__('tagForge') + ' - Noty'});
+    });
+
+    app.get('/console/tag-forge', function (req, res) {
+        res.render('console/tag-forge', { title: i18n.__('tagForge') + ' - Noty'});
     });
 };

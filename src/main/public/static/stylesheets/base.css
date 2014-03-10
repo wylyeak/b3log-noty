@@ -189,7 +189,18 @@ textarea {
     margin: 0 auto;
 }
 
-.side {
+nav,
+footer {
+    margin: 0;
+    height: 40px;
+    background-color: #555555;
+}
+
+nav li {
+    float: left;
+}
+
+ .side {
     width: 20%;
     float: left;
 }
