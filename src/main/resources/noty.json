@@ -19,7 +19,9 @@
         "urls": [
             "/",
             "/init/mongo",
-            "/init/noty"
+            "/init/noty",
+            "/admin/settings",
+            "/console/settings"
 
         ]
     }
