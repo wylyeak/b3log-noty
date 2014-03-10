@@ -15,7 +15,7 @@
  */
 
 /**
- * @file 文章模型。
+ * @file 文章/导航模型。
  * @author Liang Ding <DL88250@gmail.com>
  * @version 1.0.0.2, Feb 28, 2014
  * @since 1.0.0
@@ -30,7 +30,7 @@ var Schema = mongoose.Schema;
 var Tag = require('./tag');
 
 /**
- * 文章结构。
+ * 文章/导航结构。
  */
 var postSchema = new Schema({
     /**
@@ -76,6 +76,14 @@ var postSchema = new Schema({
      */
     commentable: {type: Boolean, default: true},
     /**
+     * 密码，留空则表示不需要密码。
+     */
+    password: {type: String},
+    /**
+     * 类型，A：文章（Article），N：导航（Navigation）。
+     */
+    type: {type: String, enum: 'A N'.split(' '), default: 'A'},
+    /**
      * 创建时间。
      */
     created: {type: Date, default: Date.now},
@@ -102,12 +110,33 @@ postSchema.virtual('tags').set(function (tags) {
 postSchema.methods.publish = function () {
     logger.log('debug', 'Publishing post [title=%s, id=%s]', this.title, this.id);
 
+    switch (this.type) {
+        case 'A':
+            publishArticle(this);
+
+            break;
+        case 'N':
+            // TODO: 导航发布
+            break;
+        default:
+            throw Error('Unsupported post type [' + this.type + ']');
+    }
+
+    logger.log('debug', 'Published post [title=%s, id=%s]', this.title, this.id);
+};
+
+/**
+ * 发布文章。
+ *
+ * @param articleEntity
+ */
+function publishArticle(articleEntity) {
     // 生成文章固定链接
-    genPostPermalink(this);
+    genPostPermalink(articleEntity);
 
-    var tagRefs = this.tagRefs;
+    var tagRefs = articleEntity.tagRefs;
 
-    this.save(function (err) {
+    articleEntity.save(function (err) {
         if (err) {
             throw err;
         }
@@ -118,9 +147,7 @@ postSchema.methods.publish = function () {
             tag.save(); // 创建一个标签（在 Tag.pre() 中处理重复判断）
         }
     });
-
-    logger.log('debug', 'Published post [title=%s, id=%s]', this.title, this.id);
-};
+}
 
 /**
  * 生成文章固定链接。
