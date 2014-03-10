@@ -119,7 +119,7 @@ postSchema.methods.publish = function () {
             // TODO: 导航发布
             break;
         default:
-            throw Error('Unsupported post type [' + this.type + ']');
+            throw new Error('Unsupported post type [' + this.type + ']');
     }
 
     logger.log('debug', 'Published post [title=%s, id=%s]', this.title, this.id);

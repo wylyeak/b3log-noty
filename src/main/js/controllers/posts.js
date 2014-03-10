@@ -32,7 +32,7 @@ var Post = require('../models/post');
 
 module.exports.controller = function (app) {
 
-    app.get('/post', function (req, res) {
+    app.get('/console/post', function (req, res) {
         var post = new Post({
             title: ''
         });

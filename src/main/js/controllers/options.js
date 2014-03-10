@@ -42,9 +42,9 @@ module.exports.controller = function (app) {
         res.render('console/settings', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
 
         return;
-    })
+    });
 
-    app.put('/setting', function (req, res) {
+    app.put('/console/setting', function (req, res) {
         Option.update({category: req.query.cat, key: req.query.key}, {value: req.query.value}, function () {
             res.send(true);
         });

@@ -20,7 +20,8 @@
             "/",
             "/init/mongo",
             "/init/noty",
-            "/admin/settings",
+            "/console",
+            "/console/tag-forge",
             "/console/settings"
 
         ]
