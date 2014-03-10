@@ -192,17 +192,42 @@ textarea {
 nav,
 footer {
     margin: 0;
-    height: 40px;
-    background-color: #555555;
+    background-color: #333;
 }
 
 nav li {
     float: left;
+    font-weight: 400;
+    line-height: 1;
+}
+
+nav a {
+    color: #FFF;
+    display: inline-block;
+    padding: 0.83em 0.95em;
+    transition: opacity 0.2s ease 0s, background 0.2s ease 0s, box-shadow 0.2s ease 0s;
+}
+
+nav a:before {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.03) 100%);
+}
+
+nav a.current {
+    background-color: #5C5C5C;
+}
+
+nav a:hover {
+    text-decoration: none;
+    background-color: #484848;
 }
 
  .side {
-    width: 20%;
-    float: left;
+     box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     -webkit-box-sizing: border-box;
+     float: left;
+     padding: 1em 2em 1em 0;
+     width: 20%;
 }
 
 .content {
@@ -212,13 +237,6 @@ nav li {
 /* end framework */
 
 /* start common */
-.segment {
-    background-color: #FFFFFF;
-    border-radius: 5px;
-    border: 1px solid #E5E5E5;
-    margin: 1em 0;
-}
-
 .input {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -244,6 +262,29 @@ nav li {
     display: block;
     font-size: 0.875em;
     margin: 0 1em 1em;
+    position: relative;
+}
+
+.label.last {
+    margin-bottom: 2em;
+}
+
+span.tip {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.85);
+    border-radius: 0.3125em;
+    color: #FFFFFF;
+    display: block;
+    line-height: 1;
+    padding: 0.85em 1.2em;
+    position: absolute;
+    text-align: right;
+    top: 1.72em;
+    width: 100%;
+    opacity: 0;
+    left: 0;
 }
 
 .button {
@@ -281,6 +322,17 @@ nav li {
 
 .button.green:hover {
     background-color: #5BCB73;
+}
+
+.li li {
+    list-style: none;
+}
+
+.segment {
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    border: 1px solid #E5E5E5;
+    margin: 1em 0;
 }
 
 .segment .header {

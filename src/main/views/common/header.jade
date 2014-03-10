@@ -1,6 +1,12 @@
 header
-    nav
+    nav.li.fn-clear
         li
-            a(href="/") index
+            if (consoleType)
+                a(href="/") index
+            else
+                a.current(href="#") index
         li
-            a(href="/console") console
+            if (consoleType)
+                a.current(href="#") console
+            else
+                a(href="/console") console

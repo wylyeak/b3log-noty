@@ -19,5 +19,7 @@
 	"dbConnErr": "数据库连接存在异常",
 	"tagForge": "标签图",
 	"newArticl": "新建文章",
-	"settings": "参数配置"
+	"settings": "参数配置",
+	"consoleType": "consoleType",
+    "consoleIndex": "后台首页"
 }

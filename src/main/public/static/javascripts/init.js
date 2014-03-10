@@ -17,7 +17,7 @@
 /**
  * @file 初始化
  * @author <a href="mailto:LLY219@gmail.com">Liyuan Li</a>
- * @version 1.0.0.1, Mar6, 2014
+ * @version 1.0.0.1, Mar 6, 2014
  * @since 1.0.0
  */
 "use strict";

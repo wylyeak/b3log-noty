@@ -1,6 +1,19 @@
 extends common/layout
 block content
-    div.segment.fn-clear
+    div.segment.fn-clear#settings
+        div.header 参数设置
         label.label #{__("title")}
-            input#title.input(value="B3log Noty")
-        button.button.fn-right.green #{__("init")}
+            input.input(value="B3log Noty")
+            span.tip save succ
+        label.label #{__("title")}
+            input.input(value="B3log Noty")
+        label.label #{__("title")}
+            input.input(value="B3log Noty")
+        label.label #{__("title")}
+            input.input(value="B3log Noty")
+        label.label.last #{__("title")}
+            input.input(value="B3log Noty")
+
+block scripts
+    script(src='/static/javascripts/lib/jquery-2.1.0.min.js')
+    script(src='/static/javascripts/console.js')

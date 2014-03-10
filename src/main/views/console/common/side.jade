@@ -1,7 +1,18 @@
-ul
+ul.li
     li
-        a(href="/console/settings") #{__("settings")}
+        if (consoleType==="index")
+            a.current(href="#") #{__("consoleIndex")}
+        else
+            a(href="/console") #{__("consoleIndex")}
     li
-        a(href="/console/tag-forge") #{__("tagForge")}
+        if (consoleType==="settings")
+            a.current(href="#") #{__("settings")}
+        else
+            a(href="/console/settings") #{__("settings")}
+    li
+        if (consoleType==="tag-forge")
+            a.current(href="#") #{__("tagForge")}
+        else
+            a(href="/console/tag-forge") #{__("tagForge")}
     li
         a(href="/console/new-article") #{__("newArticl")}
