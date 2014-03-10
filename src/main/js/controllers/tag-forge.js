@@ -14,39 +14,25 @@
  * limitations under the License.
  */
 
-
 /**
- * @file 用户参数配置。
+ * @file    后台标签处理。
  *
  * <ul>
- *     <li>展现参数配置：/settings，GET</li>
- *     <li>更新参数配置：/setting?cat=xxx&key=xxx&value=xxx, PUT</li>
+ *     <li>展现后台标签：/tag-forge, GET</li>
  * </ul>
  *
- * @author Steven Yao<wmainlove@gmail.com>
- * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.2, Mar 10, 2014
+ * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
+ * @version 1.0.0.0, Mar 10, 2014
  * @since 1.0.0
  */
 
 "use strict";
-
 var noty = require('../noty');
 var i18n = noty('i18n');
-var logger = noty('logger');
-var Option = require('../models/option');
 
 module.exports.controller = function (app) {
 
-    app.get('/settings', function (req, res){
-        res.render('admin/settings', { title: 'Noty - ' + i18n.__('init') + i18n.__('wizard') });
-
-        return;
-    })
-
-    app.put('/setting', function (req, res) {
-        Option.update({category: req.query.cat, key: req.query.key}, {value: req.query.value}, function () {
-            res.send(true);
-        });
+    app.get('/tag-forge', function (req, res) {
+        res.render('admin/tag-forge', { title: i18n.__('tagForge') + ' - Noty'});
     });
 };

@@ -181,15 +181,26 @@ textarea {
 .fn-none {
     display: none;
 }
-
 /* end function */
 
-/* start common */
+/* start framework */
 .wrap {
     width: 90%;
     margin: 0 auto;
 }
 
+.side {
+    width: 20%;
+    float: left;
+}
+
+.content {
+    width: 80%;
+    float: left;
+}
+/* end framework */
+
+/* start common */
 .segment {
     background-color: #FFFFFF;
     border-radius: 5px;
