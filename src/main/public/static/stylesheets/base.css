@@ -285,6 +285,7 @@ span.tip {
     width: 100%;
     opacity: 0;
     left: 0;
+    display: none;
 }
 
 .button {

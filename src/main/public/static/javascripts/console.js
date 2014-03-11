@@ -28,14 +28,27 @@
         $.post("/console/settings", {
             "value": $it.val()
         }, function () {
-            $it.next().animate({
+            var $tip = $it.next();
+            $tip.show();
+            $tip.animate({
                 "opacity": 1
             });
             setTimeout(function () {
-                $it.next().animate({
+                $tip.animate({
                     "opacity": 0
+                }, function () {
+                    $tip.hide();
                 });
             }, 2000);
+        });
+    });
+
+    $("#settings .tip").click(function () {
+        var $tip = $(this);
+        $tip.animate({
+            "opacity": 0
+        }, function () {
+            $tip.hide();
         });
     });
 })();
