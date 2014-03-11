@@ -105,7 +105,9 @@ postSchema.virtual('tags').set(function (tags) {
 });
 
 /**
- * 发布文章。
+ * 发布。
+ *
+ * 根据类型（type）字段选择发布文章或发布导航。
  */
 postSchema.methods.publish = function () {
     logger.log('debug', 'Publishing post [title=%s, id=%s]', this.title, this.id);
