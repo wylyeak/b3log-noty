@@ -22,7 +22,8 @@
             "/init/noty",
             "/console",
             "/console/tag-forge",
-            "/console/settings"
+            "/console/settings",
+            "/dev/reset"
 
         ]
     }
