@@ -67,6 +67,33 @@ var optionSchema = new Schema({
     value: {type: String}
 });
 
+/**
+ * 获取“偏好设定”。
+ *
+ * 偏好设定对象：
+ * <pre>
+ * {
+ *     title: "",
+ *     subTitle: ""
+ * }
+ * </pre>，将作为实参调用传入的回调函数。
+ */
+optionSchema.statics.getPreferences = function (callback) {
+    Option.find({category: 'prefs'}, null, function(err, options) {
+        var preferences = {};
+
+        for (var key in options) {
+            var option = options[key];
+            preferences[option.key] = option.value;
+        }
+
+        if (callback) {
+            callback(preferences);
+        }
+
+        return preferences;
+    });
+};
 
 /**
  * 初始化数据库。

@@ -25,21 +25,24 @@
 (function () {
     $("#settings input").blur(function () {
         var $it = $(this);
-        $.post("/console/settings", {
-            "value": $it.val()
-        }, function () {
-            var $tip = $it.next();
-            $tip.show();
-            $tip.animate({
-                "opacity": 1
-            });
-            setTimeout(function () {
+
+        $.ajax({
+            url: '/console/setting?cat=prefs&key=' + $it.attr('name') + '&value=' + $it.val(),
+            type: 'PUT',
+            success: function () {
+                var $tip = $it.next();
+                $tip.show();
                 $tip.animate({
-                    "opacity": 0
-                }, function () {
-                    $tip.hide();
+                    "opacity": 1
                 });
-            }, 2000);
+                setTimeout(function () {
+                    $tip.animate({
+                        "opacity": 0
+                    }, function () {
+                        $tip.hide();
+                    });
+                }, 2000);
+            }
         });
     });
 

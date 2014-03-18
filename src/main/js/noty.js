@@ -20,7 +20,7 @@
  * @file Noty 相关配置与工具。
  * @author Liang Ding <DL88250@gmail.com>
  * @author Steven Yao <wmainlove@gmail.com>
- * @version 1.0.0.1, Mar 7, 2014
+ * @version 1.0.1.1, Mar 18, 2014
  * @since 1.0.0
  */
 
@@ -118,8 +118,8 @@ service.i18n = new I18n({
     locales: conf.i18n.locales
 });
 
-// 如果用户已经初始化过 mongo （步骤 1）了，则在此时连接 mongo，否则会在初始化过程中连接（option#initMongo）
-if (_.isInited(1)) {
+// 如果用户已经初始化过 mongo （做过步骤 1）了，则在此时连接 mongo，否则会在初始化过程中连接（option#initMongo）
+if (_.isInited(1) || _.isInited(2)) {
     var mongoConf = conf.mongo;
     var mongoURL = 'mongodb://' + mongoConf.username + ':' + mongoConf.password + '@' +
         mongoConf.hostname + ':' + mongoConf.port + '/' + mongoConf.database;

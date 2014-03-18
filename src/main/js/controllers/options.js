@@ -19,13 +19,13 @@
  * @file 用户参数配置。
  *
  * <ul>
- *     <li>展现参数配置：/console/settings，GET</li>
+ *     <li>展现参数配置-偏好设定：/console/settings/prefs，GET</li>
  *     <li>更新参数配置：/console/setting?cat=xxx&key=xxx&value=xxx, PUT</li>
  * </ul>
  *
  * @author Steven Yao<wmainlove@gmail.com>
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.2, Mar 10, 2014
+ * @version 1.1.0.2, Mar 18, 2014
  * @since 1.0.0
  */
 
@@ -38,13 +38,15 @@ var Option = require('../models/option');
 
 module.exports.controller = function (app) {
 
-    app.get('/console/settings', function (req, res){
-        res.render('console/settings', {
-            title: 'Noty - ' + i18n.__('settings'),
-            consoleType: "settings"
+    app.get('/console/settings/prefs', function (req, res) {
+        Option.getPreferences(function (preferences) {
+            res.render('console/settings-prefs', {
+                title: 'Noty - ' + i18n.__('settings'),
+                notyTitle: preferences.title,
+                notySubTitle: preferences.subTitle,
+                consoleType: "settings"
+            });
         });
-
-        return;
     });
 
     app.put('/console/setting', function (req, res) {

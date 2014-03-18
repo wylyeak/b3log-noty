@@ -1,0 +1,13 @@
+extends common/layout
+block content
+    div.segment.fn-clear#settings
+        div.header 参数设置
+        label.label #{__("title")}
+            input.input(value="#{notyTitle}", name="title")
+            span.tip save succ
+        label.label #{__("subTitle")}
+            input.input(value="#{notySubTitle}", name="subTitle")
+
+block scripts
+    script(src='/static/javascripts/lib/jquery-2.1.0.min.js')
+    script(src='/static/javascripts/console.js')

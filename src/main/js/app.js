@@ -64,8 +64,7 @@ app.use(function (req, res, next) {
 
     logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
 
-    var inited = util.getInited();
-    switch (inited) {
+    switch (util.getInited()) {
         case 2: // 整个初始化过程已经完毕
             next(); // 推进请求处理
 
