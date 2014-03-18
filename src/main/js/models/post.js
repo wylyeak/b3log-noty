@@ -17,7 +17,7 @@
 /**
  * @file 文章/导航模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.2, Feb 28, 2014
+ * @version 1.0.1.3, Mar 18, 2014
  * @since 1.0.0
  */
 
@@ -64,9 +64,9 @@ var postSchema = new Schema({
      */
     permalink: {type: String, default: Date.now, required: true},
     /**
-     * 是否置顶。
+     * 排序字段（按值降序），用于自定义排序，比如置顶功能。
      */
-    stickied: {type: Boolean, default: false},
+    order: {type: Number, default: 0},
     /**
      * 签名档 Id。
      */
@@ -145,6 +145,8 @@ function publishArticle(articleEntity) {
 
         for (var key in tagRefs) {
             var tag = tagRefs[key];
+
+            tag.posts = [articleEntity];
 
             tag.save(); // 创建一个标签（在 Tag.pre() 中处理重复判断）
         }

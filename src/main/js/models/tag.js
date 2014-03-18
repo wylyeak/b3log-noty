@@ -17,7 +17,7 @@
 /**
  * @file 标签模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 20, 2014
+ * @version 1.1.1.0, Mar 18, 2014
  * @since 1.0.0
  */
 
@@ -37,9 +37,27 @@ var tagSchema = new Schema({
      */
     title: {type: String},
     /**
+     * 使用该标签的文章 Ids。
+     */
+    postIds: [
+        {type: Schema.ObjectId, ref: 'Post'}
+    ],
+    /**
      * 创建时间。
      */
     created: {type: Date, default: Date.now}
+});
+
+/**
+ * 在赋值虚拟属性 posts 时关联 postIds，
+ */
+tagSchema.virtual('posts').set(function (posts) {
+    for (var key in posts) {
+        var post = posts[key];
+        if (!containsPost(this, post)) {
+            this.postIds.push(post);
+        }
+    }
 });
 
 var Tag = mongoose.model('Tag', tagSchema);
@@ -49,11 +67,34 @@ var Tag = mongoose.model('Tag', tagSchema);
  */
 tagSchema.pre('save', function (next) {
     Tag.find().where('title').equals(this.title).exec(function (err, tags) {
-        if (!tags || 0>= tags.length) { // 不存在的话继续推进保存
+        if (!tags || 0 >= tags.length) { // 不存在的话继续推进保存
             next();
+        } else { // 存在的话更新文章 Ids 引用
+            var tag = tags[0];
+
+            tag.update({title: this.title}, {$set: {postIds: this.postIds}}, function (err) {
+
+            });
         }
     });
 });
+
+/**
+ * 判断指定的 tag 中是否已经关联了指定的 post。
+ *
+ * @param tag 指定的 tag
+ * @param post 指定的 post
+ * @returns {boolean}
+ */
+function containsPost(tag, post) {
+    for (var postId in tag.postIds) {
+        if (postId === post._id) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 /**
  * 保存后打日志。
