@@ -21,5 +21,6 @@
 	"newArticl": "新建文章",
 	"settings": "参数配置",
 	"consoleType": "consoleType",
-    "consoleIndex": "后台首页"
+    "consoleIndex": "后台首页",
+    "content": "内容"
 }

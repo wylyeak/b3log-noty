@@ -15,4 +15,7 @@ ul.li
         else
             a(href="/console/tag-forge") #{__("tagForge")}
     li
-        a(href="/console/new-article") #{__("newArticl")}
+        if (consoleType==="new-article")
+            a.current(href="#") #{__("newArticl")}
+        else
+            a(href="/console/new-article") #{__("newArticl")}

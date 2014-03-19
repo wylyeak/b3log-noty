@@ -1,0 +1,9 @@
+extends common/layout
+block content
+    div.segment.fn-clear#settings
+        div.header
+        label.label #{__("title")}
+            input.input(name="title")
+            span.tip save succ
+        label.label #{__("content")}
+            textarea.input

@@ -22,23 +22,22 @@
  * </ul>
  *
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.1, Feb 28, 2014
+ * @version 1.0.0.2, Mar 19, 2014
  * @since 1.0.0
  */
 
 "use strict";
 
 var Post = require('../models/post');
+var noty = require('../noty');
+var i18n = noty('i18n');
 
 module.exports.controller = function (app) {
 
-    app.get('/console/post', function (req, res) {
-        var post = new Post({
-            title: ''
+    app.get('/console/new-article', function (req, res) {
+        res.render('console/new-article', {
+            title: i18n.__('newArticl') + ' - Noty',
+            consoleType: "new-article"
         });
-
-        post.publish();
-
-        res.send('post');
     });
 };
