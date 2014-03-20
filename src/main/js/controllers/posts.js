@@ -22,7 +22,7 @@
  * </ul>
  *
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.2, Mar 19, 2014
+ * @version 1.1.0.2, Mar 20, 2014
  * @since 1.0.0
  */
 
@@ -34,10 +34,10 @@ var i18n = noty('i18n');
 
 module.exports.controller = function (app) {
 
-    app.get('/console/new-article', function (req, res) {
-        res.render('console/new-article', {
-            title: i18n.__('newArticl') + ' - Noty',
-            consoleType: "new-article"
+    app.get('/console/posts/new', function (req, res) {
+        res.render('console/new-post', {
+            title: i18n.__('newPost') + ' - Noty',
+            consoleType: "new-post"
         });
     });
 };
