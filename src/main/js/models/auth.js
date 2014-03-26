@@ -14,39 +14,40 @@
  * limitations under the License.
  */
 
+
 /**
- * @file 用户相关处理。
- *
- * <ul>
- *     <li>展现用户列表：/users, GET</li>
- * </ul>
- *
+ * @file 权限模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 14, 2014
+ * @version 1.0.0.0, Mar 26, 2014
  * @since 1.0.0
  */
 
 "use strict";
 
-var Auth = require('../models/auth');
 var noty = require('../noty');
-var i18n = noty('i18n');
+var User = require('./user');
 var logger = noty('logger');
 
-module.exports.controller = function (app) {
+var Auth = {
+    login: function (req, res, callback) {
+        var userNemeOrEmail = req.param('userNameOrEmail');
+        var passwordHash = req.param('passwordHash');
 
-    app.get('/users', function (req, res) {
-        res.send('test');
-    });
+        // TODO: 登录
 
-    app.post('/login', function (req, res) {
-        Auth.login(req, res, function (result) {
-            if (result.succ) {
-
-            } else {
-                
-            }
+        callback({
+            succ: true,
+            msg: ''
         });
+    },
 
-    });
+    checkLogin: function (req, res, next) {
+        if (!req.session.user_id) {
+            res.redirect('/login');
+        } else {
+            next();
+        }
+    }
 };
+
+module.exports = Auth;

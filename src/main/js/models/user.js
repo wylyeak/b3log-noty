@@ -40,7 +40,7 @@ var userSchema = new Schema({
      */
     name: {type: String, required: [true, noty('i18n').__('invalidFormat')]},
     /**
-     * 邮件。
+     * 邮箱。
      */
     email: {type: String, set: toLowerCase},
     /**

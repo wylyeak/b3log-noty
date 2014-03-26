@@ -17,7 +17,7 @@
 /**
  * @file 评论模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Feb 20, 2014
+ * @version 1.1.0.0, Mar 26, 2014
  * @since 1.0.0
  */
 
@@ -33,7 +33,7 @@ var Schema = mongoose.Schema;
  */
 var commentSchema = new Schema({
     /**
-     * 内容。
+     * 评论内容。
      */
     content: {type: String},
     /**
@@ -41,13 +41,17 @@ var commentSchema = new Schema({
      */
     name: {type: String},
     /**
-     * 评论人邮件。
+     * 评论人邮箱。
      */
     email: {type: String, set: toLower},
     /**
-     * 评论文章 Id。
+     * 评论文章/导航 Id。
      */
     postId: {type: Schema.ObjectId, ref: "Post"},
+    /**
+     * 回复评论的 Id。
+     */
+    replyId: {type: Schema.ObjectId, ref: "Comment"},
     /**
      * 书签地址。
      */

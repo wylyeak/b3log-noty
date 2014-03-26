@@ -23,20 +23,22 @@
  * </ul>
  *
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.2.0.2, Mar 26, 2014
+ * @version 1.2.1.2, Mar 26, 2014
  * @since 1.0.0
  */
 
 "use strict";
 
 var Post = require('../models/post');
+var Tag = require('../models/tag');
 var noty = require('../noty');
 var i18n = noty('i18n');
 var str = noty('_').str;
+var Auth = require('../models/auth');
 
 module.exports.controller = function (app) {
 
-    app.get('/console/article/new', function (req, res) {
+    app.get('/console/article/new', Auth.checkLogin, function (req, res) {
         res.render('console/new-article', {
             title: i18n.__('newArticle') + ' - Noty',
             consoleType: "new-article"
@@ -66,7 +68,7 @@ module.exports.controller = function (app) {
             tagStr = tagStr.trim();
 
             if (!str(tagStr).isBlank()) {
-                tags.push([new Tag({title: tagStr})]);
+                tags.push(new Tag({title: tagStr}));
             }
         }
 

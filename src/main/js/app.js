@@ -52,8 +52,8 @@ app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.json());
 app.use(express.urlencoded());
-// TODO: app.use(express.cookieParser('your secret here'));
-// TODO: app.use(express.session());
+app.use(express.cookieParser('noty console'));
+app.use(express.session());
 app.use(function (req, res, next) {
     if (req.path.indexOf('/static') > -1) { // 如果请求静态资源
         // 则直接交给 Express 处理

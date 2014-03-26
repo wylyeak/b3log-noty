@@ -23,8 +23,8 @@
             "/console",
             "/console/tag-forge",
             "/console/settings",
-            "/dev/reset"
-
+            "/dev/reset",
+            "/login"
         ]
     }
 }
