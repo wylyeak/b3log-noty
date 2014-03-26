@@ -84,6 +84,10 @@ var postSchema = new Schema({
      */
     type: {type: String, enum: 'A N'.split(' '), default: 'A'},
     /**
+     * 状态，0：草稿，1：已发布
+     */
+    status: {type: Number, enum: [0, 1], default: 1},
+    /**
      * 创建时间。
      */
     created: {type: Date, default: Date.now},

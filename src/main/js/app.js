@@ -62,7 +62,7 @@ app.use(function (req, res, next) {
         return;
     }
 
-    logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
+    // logger.log('debug', 'Request [URL=%s, method=%s]', req.url, req.method);
 
     switch (util.getInited()) {
         case 2: // 整个初始化过程已经完毕

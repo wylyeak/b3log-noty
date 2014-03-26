@@ -15,14 +15,15 @@
  */
 
 /**
- * @file 发布相关处理处理。
+ * @file 发布（文章/导航）相关处理。
  *
  * <ul>
- *     <li>发布：/post, PUT</li>
+ *     <li>展现新建文章页面：/console/article/new</li>
+ *     <li>新建文章：/console/article, PUT</li>
  * </ul>
  *
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.1.0.2, Mar 20, 2014
+ * @version 1.2.0.2, Mar 26, 2014
  * @since 1.0.0
  */
 
@@ -31,13 +32,50 @@
 var Post = require('../models/post');
 var noty = require('../noty');
 var i18n = noty('i18n');
+var str = noty('_').str;
 
 module.exports.controller = function (app) {
 
-    app.get('/console/posts/new', function (req, res) {
-        res.render('console/new-post', {
-            title: i18n.__('newPost') + ' - Noty',
-            consoleType: "new-post"
+    app.get('/console/article/new', function (req, res) {
+        res.render('console/new-article', {
+            title: i18n.__('newArticle') + ' - Noty',
+            consoleType: "new-article"
         });
+    });
+
+    /**
+     * 新建文章，请求参数：
+     *
+     * {
+     *     title: "",
+     *     abstract: "",
+     *     content: "",
+     *     tags: ""
+     * }
+     */
+    app.put('/console/article', function (req, res) {
+        var title = req.param('title');
+        var abstract = req.param('abstract');
+        var content = req.param('content');
+        var tagsStr = req.param('tags');
+
+        var tagStrs = tagsStr.split(',');
+        var tags = [];
+
+        for (var tagStr in tagStrs) {
+            tagStr = tagStr.trim();
+
+            if (!str(tagStr).isBlank()) {
+                tags.push([new Tag({title: tagStr})]);
+            }
+        }
+
+        new Post({
+            title: title,
+            abstract: abstract,
+            authorId: '0',
+            content: content,
+            tags: tags
+        }).publish();
     });
 };

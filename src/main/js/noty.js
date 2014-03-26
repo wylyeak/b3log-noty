@@ -20,7 +20,7 @@
  * @file Noty 相关配置与工具。
  * @author Liang Ding <DL88250@gmail.com>
  * @author Steven Yao <wmainlove@gmail.com>
- * @version 1.0.1.1, Mar 18, 2014
+ * @version 1.0.2.1, Mar 26, 2014
  * @since 1.0.0
  */
 
@@ -68,7 +68,7 @@ _.mixin({
     /**
      * 返回 Noty 当前处于的初始化步骤。
      */
-    getInited: function() {
+    getInited: function () {
         var confProdPath = path.join(__dirname, '../resources/noty-prod.json');
         var exists = fs.existsSync(confProdPath);
 
@@ -135,5 +135,5 @@ if (_.isInited(1) || _.isInited(2)) {
     });
 
     // 连接数据库
-    mongoose.connect(mongoURL);
+    mongoose.connect(mongoURL, {server: {auto_reconnect: true}});
 }

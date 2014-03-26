@@ -79,7 +79,7 @@ var optionSchema = new Schema({
  * </pre>，将作为实参调用传入的回调函数。
  */
 optionSchema.statics.getPreferences = function (callback) {
-    Option.find({category: 'prefs'}, null, function(err, options) {
+    Option.find({category: 'prefs'}, null, function (err, options) {
         var preferences = {};
 
         for (var key in options) {
@@ -124,7 +124,7 @@ optionSchema.statics.initMongo = function (arg, callback) {
         arg.hostname + ':' + arg.port + '/' + arg.database;
 
     mongoose.connection.close(); // 无论是否有已打开的连接，先关闭一次，避免下面进行连接时报错
-    mongoose.connect(mongoURL);
+    mongoose.connect(mongoURL, {server: {auto_reconnect: true}});
 
     mongoose.connection.on('connected', function () {
         if (!initedDB) {
@@ -204,15 +204,13 @@ optionSchema.statics.initNoty = function (arg, callback) {
     admin.save();
 
     // 发布 "Hello World!" 文章
-    var post = new Post({
+    new Post({
         title: i18n.__('helloWorldTitle'),
         abstract: i18n.__('helloWorldContent'),
         authorId: admin.id,
         content: i18n.__('helloWorldContent'),
         tags: [new Tag({title: 'B3log Noty'})]
-    });
-
-    post.publish();
+    }).publish();
 
     var conf = require(confProdPath); // 此时生产配置一定存在
     // 更新步骤标识，2 表示初始化应用（步骤 2）已经完成
