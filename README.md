@@ -9,7 +9,6 @@ Noty [nəuti] 是一个用于知识管理与分享的网络应用，您可以用
 细节请移步：
 
 * [Noty 产品设计概要](https://docs.google.com/document/d/1rsoPV61o4T-_gBUBG7SxCiSYPHbWIG-wUPwxga3t3jM/edit?usp=sharing)
-* [Noty 开发计划](https://docs.google.com/spreadsheet/ccc?key=0AtvEkLPApAcqdFFvODJYbmdrZlM2OWtUeHJFckZvLWc&usp=sharing)
 * [Noty 开发指南](https://docs.google.com/document/d/1wl4rFJj-Gd-_Q314RZaLKrSND9MlERDgaDcKInOpc_4/edit?usp=sharing)
 
 A bran-new [solo](https://github.com/b3log/b3log-solo), let's play! :blush:
