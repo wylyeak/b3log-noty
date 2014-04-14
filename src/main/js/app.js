@@ -17,7 +17,7 @@
 /**
  * @file Noty 主程序入口。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.1, Feb 18, 2014
+ * @version 1.0.0.2, Apr 14, 2014
  * @since 1.0.0
  */
 
@@ -49,11 +49,10 @@ app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');
 
 // 请求链
-app.use(express.favicon());
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.cookieParser('noty console'));
-app.use(express.session());
+app.use(require('static-favicon')(__dirname + '/../public/static/images/favicon.ico'));
+app.use(require('body-parser')());
+app.use(require('cookie-parser')());
+app.use(require('express-session')({ secret: 'noty console', cookie: { maxAge: 60000 }}));
 app.use(function (req, res, next) {
     if (req.path.indexOf('/static') > -1) { // 如果请求静态资源
         // 则直接交给 Express 处理
@@ -95,11 +94,10 @@ app.use(function (req, res, next) {
 
 });
 app.use(express.static(path.join(__dirname, '../public')));
-app.use(app.router);
 
 // 开发时
 if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
+    app.use(require('errorhandler')());
 
     app.get('/dev/reset', function (req, res) {
         var Option = require('./models/option');
