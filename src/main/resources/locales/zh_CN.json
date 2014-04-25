@@ -23,5 +23,6 @@
 	"consoleIndex": "后台首页",
 	"content": "内容",
 	"newArticle": "新建文章",
-	"tag": "标签"
+	"tag": "标签",
+    "login": "登录"
 }

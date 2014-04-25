@@ -39,6 +39,12 @@ module.exports.controller = function (app) {
         res.send('test');
     });
 
+    app.get('/login', function (req, res) {
+        res.render('login', {
+            title: i18n.__('login') + ' - Noty'
+        });
+    });
+
     app.post('/login', function (req, res) {
         Auth.login(req, res, function (result) {
             if (result.succ) {
