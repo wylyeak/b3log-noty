@@ -26,7 +26,7 @@
     // 登录
     $("button.button.orange").click(function () {
         $.post( "login", {
-            username: $("#username").val(),
+            username: $("#email").val(),
             password: $("#password").val()
         }, function( data ) {
 
