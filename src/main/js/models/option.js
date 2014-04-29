@@ -197,7 +197,7 @@ optionSchema.statics.initNoty = function (arg, callback) {
     var admin = new User({
         name: arg.userName,
         email: arg.email,
-        password: arg.password,
+        password: arg.password, // User 保存的时候会哈希
         role: 'Admin'
     });
 
@@ -219,6 +219,9 @@ optionSchema.statics.initNoty = function (arg, callback) {
     fs.writeFileSync(confProdPath, JSON.stringify(conf, null, 4));
 
     logger.log('info', 'Initialized Noty');
+
+    // 登录用户
+    arg.req.session.user = admin;
 
     callback('succ');
 };

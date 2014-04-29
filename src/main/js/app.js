@@ -59,6 +59,7 @@ app.use(require('body-parser')());
 app.use(require('cookie-parser')());
 app.use(session({
     secret: 'noty console',
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
     store: new MongoStore({
         auto_reconnect: true,
         url : mongoURL
@@ -109,7 +110,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 if ('development' == app.get('env')) {
     app.use(function (err, req, res, next) { // Error Handler
             res.status(500);
-            res.render('error', { error: err });
+
+            console.error(err);
         }
     );
 
@@ -120,8 +122,6 @@ if ('development' == app.get('env')) {
 
         res.redirect('/');
     });
-
-
 }
 
 // 生产环境
