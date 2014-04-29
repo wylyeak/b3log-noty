@@ -17,7 +17,7 @@
 /**
  * @file Noty 主程序入口。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.2, Apr 14, 2014
+ * @version 1.1.0.2, Apr 29, 2014
  * @since 1.0.0
  */
 
@@ -95,9 +95,13 @@ app.use(function (req, res, next) {
 });
 app.use(express.static(path.join(__dirname, '../public')));
 
-// 开发时
+// 开发环境
 if ('development' == app.get('env')) {
-    app.use(require('errorhandler')());
+    app.use(function errorHandler(err, req, res, next) {
+            res.status(500);
+            res.render('error', { error: err });
+        }
+    );
 
     app.get('/dev/reset', function (req, res) {
         var Option = require('./models/option');
@@ -106,6 +110,13 @@ if ('development' == app.get('env')) {
 
         res.redirect('/');
     });
+
+
+}
+
+// 生产环境
+if ('production' == app.get('env')) {
+
 }
 
 // 动态添加路由

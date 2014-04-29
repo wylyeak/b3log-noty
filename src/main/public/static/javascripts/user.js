@@ -25,11 +25,15 @@
 (function () {
     // 登录
     $("button.button.orange").click(function () {
-        $.post( "login", {
-            username: $("#email").val(),
-            password: $("#password").val()
-        }, function( data ) {
-
+        $.post("login", {
+            username: $("#userNameOrEmail").val(),
+            password: $("#passwordHash").val()
+        }, function (data) {
+            if (data.sc) {
+                window.location.href = "/console";
+            } else {
+                alert(sc.msg);
+            }
         });
     });
 })();

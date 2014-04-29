@@ -48,9 +48,11 @@ module.exports.controller = function (app) {
     app.post('/login', function (req, res) {
         Auth.login(req, res, function (result) {
             if (result.succ) {
-
+                res.send({
+                    "sc": true
+                });
             } else {
-                
+                res.redirect("/login");
             }
         });
 
