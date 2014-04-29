@@ -26,13 +26,18 @@
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
+var connect = require('connect');
 var express = require('express');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(connect);
 var I18n = require('i18n-2');
 var noty = require('./noty');
 var logger = noty('logger');
 var conf = noty('conf');
 var util = noty('_');
-
+var mongoConf = conf.mongo;
+var mongoURL = 'mongodb://' + mongoConf.username + ':' + mongoConf.password + '@' +
+    mongoConf.hostname + ':' + mongoConf.port + '/' + mongoConf.database;
 var app = express();
 
 // 环境准备
@@ -52,7 +57,14 @@ app.set('view engine', 'jade');
 app.use(require('static-favicon')(__dirname + '/../public/static/images/favicon.ico'));
 app.use(require('body-parser')());
 app.use(require('cookie-parser')());
-app.use(require('express-session')({ secret: 'noty console', cookie: { maxAge: 60000 }}));
+app.use(session({
+    secret: 'noty console',
+    store: new MongoStore({
+        auto_reconnect: true,
+        url : mongoURL
+    })
+}));
+
 app.use(function (req, res, next) {
     if (req.path.indexOf('/static') > -1) { // 如果请求静态资源
         // 则直接交给 Express 处理
@@ -90,14 +102,12 @@ app.use(function (req, res, next) {
 
             break;
     }
-
-
 });
 app.use(express.static(path.join(__dirname, '../public')));
 
 // 开发环境
 if ('development' == app.get('env')) {
-    app.use(function errorHandler(err, req, res, next) {
+    app.use(function (err, req, res, next) { // Error Handler
             res.status(500);
             res.render('error', { error: err });
         }
@@ -116,7 +126,7 @@ if ('development' == app.get('env')) {
 
 // 生产环境
 if ('production' == app.get('env')) {
-
+    // TODO: 生产环境配置
 }
 
 // 动态添加路由
