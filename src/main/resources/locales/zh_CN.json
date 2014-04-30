@@ -24,5 +24,7 @@
 	"content": "内容",
 	"newArticle": "新建文章",
 	"tag": "标签",
-    "login": "登录"
+    "login": "登录",
+    "loginErr": "用户不存在或密码错误"
+
 }

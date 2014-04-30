@@ -4,11 +4,12 @@ block content
     div.fn-clear
         br
         label.label #{__("email")}/#{__("userName")}
-            input#email.input
+            input#userNameOrEmail.input
         label.label #{__("password")}
-            input#password.input(type="password")
+            input#passwordHash.input(type="password")
         button.button.fn-right.orange #{ __("login")}
 
 block scripts
     script(src='/static/javascripts/lib/jquery-2.1.0.min.js')
+    script(src='/static/javascripts/lib/md5.min.js')
     script(src='/static/javascripts/user.js')

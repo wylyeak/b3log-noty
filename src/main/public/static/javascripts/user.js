@@ -26,13 +26,13 @@
     // 登录
     $("button.button.orange").click(function () {
         $.post("login", {
-            username: $("#userNameOrEmail").val(),
-            password: $("#passwordHash").val()
+            userNameOrEmail: $("#userNameOrEmail").val(),
+            passwordHash: hex_md5($("#passwordHash").val())
         }, function (data) {
             if (data.sc) {
                 window.location.href = "/console";
             } else {
-                alert(sc.msg);
+                alert(data.msg);
             }
         });
     });

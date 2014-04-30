@@ -30,15 +30,16 @@ var logger = noty('logger');
 
 var Auth = {
     login: function (req, res, callback) {
-        var userNemeOrEmail = req.param('userNameOrEmail');
+        var userNameOrEmail = req.param('userNameOrEmail');
         var passwordHash = req.param('passwordHash');
 
-        // TODO: 登录
-
-        callback({
-            succ: true,
-            msg: ''
-        });
+        User.findOne({$and: [
+            {password: passwordHash},
+            {$or: [
+                { name: userNameOrEmail },
+                { email: userNameOrEmail }
+            ]}
+        ]}, callback);
     },
 
     checkLogin: function (req, res, next) {
