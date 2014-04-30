@@ -26,7 +26,7 @@
     // 登录
     $("button.button.orange").click(function () {
         $.post("login", {
-            userNameOrEmail: $("#userNameOrEmail").val(),
+            userNameOrEmail: $("#userNameOrEmail").val().toLowerCase(),
             passwordHash: hex_md5($("#passwordHash").val())
         }, function (data) {
             if (data.sc) {
