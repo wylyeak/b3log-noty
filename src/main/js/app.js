@@ -17,7 +17,7 @@
 /**
  * @file Noty 主程序入口。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.2, Apr 14, 2014
+ * @version 1.1.0.2, Apr 29, 2014
  * @since 1.0.0
  */
 
@@ -26,13 +26,18 @@
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
+var connect = require('connect');
 var express = require('express');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(connect);
 var I18n = require('i18n-2');
 var noty = require('./noty');
 var logger = noty('logger');
 var conf = noty('conf');
 var util = noty('_');
-
+var mongoConf = conf.mongo;
+var mongoURL = 'mongodb://' + mongoConf.username + ':' + mongoConf.password + '@' +
+    mongoConf.hostname + ':' + mongoConf.port + '/' + mongoConf.database;
 var app = express();
 
 // 环境准备
@@ -52,7 +57,15 @@ app.set('view engine', 'jade');
 app.use(require('static-favicon')(__dirname + '/../public/static/images/favicon.ico'));
 app.use(require('body-parser')());
 app.use(require('cookie-parser')());
-app.use(require('express-session')({ secret: 'noty console', cookie: { maxAge: 60000 }}));
+app.use(session({
+    secret: 'noty console',
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
+    store: new MongoStore({
+        auto_reconnect: true,
+        url : mongoURL
+    })
+}));
+
 app.use(function (req, res, next) {
     if (req.path.indexOf('/static') > -1) { // 如果请求静态资源
         // 则直接交给 Express 处理
@@ -90,14 +103,17 @@ app.use(function (req, res, next) {
 
             break;
     }
-
-
 });
 app.use(express.static(path.join(__dirname, '../public')));
 
-// 开发时
+// 开发环境
 if ('development' == app.get('env')) {
-    app.use(require('errorhandler')());
+    app.use(function (err, req, res, next) { // Error Handler
+            res.status(500);
+
+            console.error(err);
+        }
+    );
 
     app.get('/dev/reset', function (req, res) {
         var Option = require('./models/option');
@@ -106,6 +122,11 @@ if ('development' == app.get('env')) {
 
         res.redirect('/');
     });
+}
+
+// 生产环境
+if ('production' == app.get('env')) {
+    // TODO: 生产环境配置
 }
 
 // 动态添加路由

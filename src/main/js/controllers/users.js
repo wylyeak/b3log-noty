@@ -39,14 +39,23 @@ module.exports.controller = function (app) {
         res.send('test');
     });
 
-    app.post('/login', function (req, res) {
-        Auth.login(req, res, function (result) {
-            if (result.succ) {
-
-            } else {
-                
-            }
+    app.get('/login', function (req, res) {
+        res.render('login', {
+            title: i18n.__('login') + ' - Noty'
         });
+    });
 
+    app.post('/login', function (req, res) {
+        Auth.login(req, res, function (err, user) {
+            var sc = err || null !== user;
+            var ret = {"sc": sc};
+            if (!sc) {
+                ret.msg = i18n.__('loginErr');
+            } else { // 登录成功，设置会话
+                req.session.user = user;
+            }
+
+            res.send(ret);
+        });
     });
 };

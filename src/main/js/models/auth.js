@@ -18,7 +18,7 @@
 /**
  * @file 权限模型。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.0, Mar 26, 2014
+ * @version 1.0.0.1, Apr 22, 2014
  * @since 1.0.0
  */
 
@@ -30,23 +30,31 @@ var logger = noty('logger');
 
 var Auth = {
     login: function (req, res, callback) {
-        var userNemeOrEmail = req.param('userNameOrEmail');
+        var userNameOrEmail = req.param('userNameOrEmail');
         var passwordHash = req.param('passwordHash');
 
-        // TODO: 登录
-
-        callback({
-            succ: true,
-            msg: ''
-        });
+        User.findOne({$and: [
+            {password: passwordHash},
+            {$or: [
+                { name: userNameOrEmail },
+                { email: userNameOrEmail }
+            ]}
+        ]}, callback);
     },
 
     checkLogin: function (req, res, next) {
-        if (!req.session.user_id) {
-            res.redirect('/login');
-        } else {
-            next();
-        }
+        next();
+
+        return;
+
+        // TODO: 权限验证
+        /*
+         if (!req.session.user_id) {
+         res.redirect('/login');
+         } else {
+         next();
+         }
+         */
     }
 };
 

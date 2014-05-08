@@ -96,7 +96,8 @@ module.exports.controller = function (app) {
             email: req.param('email'),
             password: req.param('password'),
             title: req.param('title'),
-            subTitle: req.param('subTitle')
+            subTitle: req.param('subTitle'),
+            req: req
         };
 
         var result = Option.initNoty(arg, function (result) {

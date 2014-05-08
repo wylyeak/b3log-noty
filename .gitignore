@@ -1,6 +1,5 @@
 .DS_Store
 .idea/runConfigurations/
-
 node_modules/
 .idea/workspace.xml
 .idea/jsLibraryMappings.xml
@@ -8,3 +7,4 @@ node_modules/
 target/
 doc/
 npm-debug.log
+src/main/resources/noty-prod.json

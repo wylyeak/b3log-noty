@@ -17,7 +17,7 @@
 /**
  * @file 配置模型测试用例。
  * @author Liang Ding <DL88250@gmail.com>
- * @version 1.0.0.1, Mar 7, 2014
+ * @version 1.0.1.1, Apr 30, 2014
  * @since 1.0.0
  */
 
@@ -125,6 +125,7 @@ describe('Option 模型测试', function () {
             });
         });
 
+        /*
         describe('#initNoty', function () {
             it('ok', function () {
                 Option.initNoty({
@@ -137,5 +138,6 @@ describe('Option 模型测试', function () {
                 });
             });
         })
+        */
     })
 })
